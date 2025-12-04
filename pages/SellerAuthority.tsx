@@ -99,7 +99,7 @@ const SellerAuthority: React.FC = () => {
   const salesImages = [sold4Months, sold8Months, sold12Months, sold12MonthsChino];
 
   useEffect(() => {
-    const title = 'Sebastian Street Realtor® |Sell Your Orange County Home';
+    const title = 'Sebastian Street Realtor® | Sell Your Orange County Home';
     const description =
       'Work with Sebastian Street, top Orange County and Inland Empire Realtor®, to sell your home for maximum value using data-driven pricing, eHomes marketing, and concierge prep.';
     const keywords =
