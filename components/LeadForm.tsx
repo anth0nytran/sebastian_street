@@ -87,27 +87,27 @@ const LeadForm: React.FC<LeadFormProps> = ({ variant = 'light', title = "Get a F
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div>
+        <div>
             <label className="block text-xs font-bold uppercase tracking-wider opacity-70 mb-1.5 ml-1">Phone</label>
-            <input 
+          <input 
               type="tel" 
               name="phone"
               placeholder="(555) 123-4567" 
-              required
-              className={`${baseInputClass} ${themeClasses}`}
+            required
+            className={`${baseInputClass} ${themeClasses}`}
               onChange={handleChange}
-            />
-          </div>
-          <div>
+          />
+        </div>
+        <div>
             <label className="block text-xs font-bold uppercase tracking-wider opacity-70 mb-1.5 ml-1">Email</label>
-            <input 
+          <input 
               type="email" 
               name="email"
               placeholder="john@example.com" 
               required
-              className={`${baseInputClass} ${themeClasses}`}
+            className={`${baseInputClass} ${themeClasses}`}
               onChange={handleChange}
-            />
+          />
           </div>
         </div>
 

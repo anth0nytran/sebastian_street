@@ -25,3 +25,17 @@
   animation: marquee var(--duration, 30s) linear infinite reverse;
 }
 
+/* Parallax Utility */
+.parallax-bg {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (max-width: 768px) {
+  .parallax-bg {
+    background-attachment: scroll; /* Disable fixed attachment on mobile for performance */
+  }
+}
+

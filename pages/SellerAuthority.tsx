@@ -11,6 +11,10 @@ import sold8Months from '../assets/sold_8_months.jpg';
 import sold12Months from '../assets/sold_12_months.jpg';
 import sold12MonthsChino from '../assets/sold_12_months_chino.jpg';
 import headshotImg from '../assets/selfie.jpg';
+import heroBg from '../assets/hero.avif';
+import sellersBg from '../assets/sellers.avif';
+import pathBg from '../assets/path.avif';
+import homeBg from '../assets/home.avif';
 
 const SOCIAL_LINKS = {
   zillow: 'https://www.zillow.com/profile/sebastianstreetrlty',
@@ -205,11 +209,12 @@ const SellerAuthority: React.FC = () => {
       </nav>
 
       {/* Hero Section */}
-      <div className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+      <div className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden parallax-bg" style={{ backgroundImage: `url(${heroBg})` }}>
+        {/* Dark Overlay for Readability */}
+        <div className="absolute inset-0 bg-[#050505]/60 z-0"></div>
         {/* Abstract Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#050505] to-transparent opacity-80 z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-transparent to-transparent opacity-80 z-0"></div>
         <div className="absolute top-10 right-0 w-2/3 h-full bg-gradient-to-l from-[#1a1a1a] via-transparent to-transparent opacity-70 z-0"></div>
-        <div className="absolute top-24 right-16 w-[28rem] h-[28rem] bg-[#d4af37]/15 rounded-full blur-[140px] z-0"></div>
         
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center mb-12">
@@ -269,8 +274,9 @@ const SellerAuthority: React.FC = () => {
       </Marquee>
 
       {/* Why Sellers Choose Sebastian */}
-      <section className="py-24 bg-[#050505]">
-        <div className="container mx-auto px-4 sm:px-6">
+      <section className="py-24 relative parallax-bg" style={{ backgroundImage: `url(${sellersBg})` }}>
+        <div className="absolute inset-0 bg-[#050505]/70 z-0"></div>
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-medium text-white mb-4">Why Sellers Choose Sebastian</h2>
             <p className="text-gray-400 text-lg">
@@ -279,7 +285,7 @@ const SellerAuthority: React.FC = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="p-8 rounded-2xl bg-[#0B0B0D] border border-white/10 hover:border-[#d4af37]/60 transition-all group">
+            <div className="p-8 rounded-2xl bg-[#0B0B0D]/80 backdrop-blur-sm border border-white/10 hover:border-[#d4af37]/60 transition-all group">
               <div className="w-12 h-12 rounded-lg bg-[#141414] flex items-center justify-center mb-6 group-hover:bg-[#d4af37]/15 group-hover:text-[#d4af37] transition-colors">
                  <BarChart3 size={24} />
               </div>
@@ -289,7 +295,7 @@ const SellerAuthority: React.FC = () => {
               </p>
             </div>
             
-            <div className="p-8 rounded-2xl bg-[#0B0B0D] border border-white/10 hover:border-[#d4af37]/60 transition-all group">
+            <div className="p-8 rounded-2xl bg-[#0B0B0D]/80 backdrop-blur-sm border border-white/10 hover:border-[#d4af37]/60 transition-all group">
               <div className="w-12 h-12 rounded-lg bg-[#141414] flex items-center justify-center mb-6 group-hover:bg-[#d4af37]/15 group-hover:text-[#d4af37] transition-colors">
                  <Layout size={24} />
               </div>
@@ -299,7 +305,7 @@ const SellerAuthority: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-8 rounded-2xl bg-[#0B0B0D] border border-white/10 hover:border-[#d4af37]/60 transition-all group">
+            <div className="p-8 rounded-2xl bg-[#0B0B0D]/80 backdrop-blur-sm border border-white/10 hover:border-[#d4af37]/60 transition-all group">
               <div className="w-12 h-12 rounded-lg bg-[#141414] flex items-center justify-center mb-6 group-hover:bg-[#d4af37]/15 group-hover:text-[#d4af37] transition-colors">
                  <Check size={24} />
               </div>
@@ -309,7 +315,7 @@ const SellerAuthority: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-8 rounded-2xl bg-[#0B0B0D] border border-white/10 hover:border-[#d4af37]/60 transition-all group">
+            <div className="p-8 rounded-2xl bg-[#0B0B0D]/80 backdrop-blur-sm border border-white/10 hover:border-[#d4af37]/60 transition-all group">
               <div className="w-12 h-12 rounded-lg bg-[#141414] flex items-center justify-center mb-6 group-hover:bg-[#d4af37]/15 group-hover:text-[#d4af37] transition-colors">
                  <TrendingUp size={24} />
               </div>
@@ -404,8 +410,9 @@ const SellerAuthority: React.FC = () => {
       </section>
 
       {/* Process Section */}
-      <section id="process" className="py-24 bg-[#050505]">
-        <div className="container mx-auto px-4 sm:px-6">
+      <section id="process" className="py-24 relative parallax-bg" style={{ backgroundImage: `url(${pathBg})` }}>
+        <div className="absolute inset-0 bg-[#050505]/70 z-0"></div>
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-20">
              <h2 className="text-3xl md:text-4xl font-serif font-medium text-white mb-4">Your Path to Sold</h2>
              <p className="text-gray-400 text-lg">A simple, transparent process designed to reduce stress and maximize your profit.</p>
@@ -493,8 +500,9 @@ const SellerAuthority: React.FC = () => {
       </section>
 
       {/* Primary CTA & Lead Form */}
-      <section id="contact" className="py-24 bg-[#050505] relative overflow-hidden">
-         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5"></div>
+      <section id="contact" className="py-24 relative overflow-hidden parallax-bg" style={{ backgroundImage: `url(${homeBg})` }}>
+         <div className="absolute inset-0 bg-[#050505]/70 z-0"></div>
+         {/* Carbon texture removed/replaced with parallax */}
          <div className="container mx-auto px-4 sm:px-6 relative z-10">
             <div className="bg-[#0b0b0d]/85 backdrop-blur-md rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl flex flex-col lg:flex-row max-w-6xl mx-auto">
                <div className="lg:w-1/2 p-12 lg:p-16 flex flex-col justify-center">
