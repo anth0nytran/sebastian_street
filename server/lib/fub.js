@@ -137,23 +137,29 @@ export async function sendToFollowUpBoss(payload) {
     return { success: false, error: 'API key not configured' };
   }
   
-  if (!xSystem || !xSystemKey) {
-    console.error('FUB_X_SYSTEM or FUB_X_SYSTEM_KEY is not configured');
-    return { success: false, error: 'System credentials not configured' };
-  }
-  
   // Build Basic Auth header (apiKey as username, empty password)
   const authString = Buffer.from(`${apiKey}:`).toString('base64');
+  
+  // Build headers - X-System headers are optional
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Basic ${authString}`
+  };
+  
+  // Only add X-System headers if provided
+  if (xSystem) {
+    headers['X-System'] = xSystem;
+  }
+  if (xSystemKey) {
+    headers['X-System-Key'] = xSystemKey;
+  }
+  
+  console.log('📤 Sending to FUB:', JSON.stringify(payload, null, 2));
   
   try {
     const response = await fetch('https://api.followupboss.com/v1/events', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Basic ${authString}`,
-        'X-System': xSystem,
-        'X-System-Key': xSystemKey
-      },
+      headers,
       body: JSON.stringify(payload)
     });
     
@@ -165,7 +171,7 @@ export async function sendToFollowUpBoss(payload) {
       console.error('FUB API Error Response:', data);
       return { 
         success: false, 
-        error: data.message || data.error || 'Unknown FUB API error',
+        error: data.errorMessage || data.message || data.error || 'Unknown FUB API error',
         data 
       };
     }

@@ -44,6 +44,18 @@ export const submitLead = async (payload: LeadPayload): Promise<ApiResponse> => 
       body: JSON.stringify(fubPayload)
     });
 
+    // Check if response is JSON
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      // Server might not be running - got HTML error page
+      if (response.status === 404) {
+        throw new Error('Backend server not running. Please start the server with: npm run dev:server');
+      }
+      const text = await response.text();
+      console.error('Non-JSON response:', text);
+      throw new Error('Server error. Please try again.');
+    }
+
     const data: ApiResponse = await response.json();
 
     if (!response.ok) {
