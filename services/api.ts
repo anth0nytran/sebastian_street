@@ -1,53 +1,102 @@
 import { LeadPayload } from '../types';
 
-export const submitLead = async (payload: LeadPayload): Promise<boolean> => {
-  // TODO: Replace with actual API endpoint
-  // const response = await fetch('/api/leads', {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify(payload)
-  // });
-  // return response.ok;
+export interface FubLeadPayload {
+  fullName: string;
+  phone: string;
+  email: string;
+  interest: string;
+  propertyAddress?: string;
+  city?: string;
+  idealTimeframe?: string;
+  pageUrl: string;
+}
 
-  // Placeholder integration for Follow Up Boss
-  sendLeadToFollowUpBoss(payload);
+export interface ApiResponse {
+  success: boolean;
+  message?: string;
+  error?: string;
+}
 
-  // Simulate network delay
-  return new Promise((resolve) => {
-    console.log("Submitting lead:", payload);
-    setTimeout(() => resolve(true), 1500);
-  });
+/**
+ * Submit lead to Follow Up Boss via backend API
+ * @param payload - Lead form data
+ * @returns Promise resolving to API response
+ */
+export const submitLead = async (payload: LeadPayload): Promise<ApiResponse> => {
+  // Transform LeadPayload to FUB format
+  const fubPayload: FubLeadPayload = {
+    fullName: payload.name,
+    phone: payload.phone,
+    email: payload.email,
+    interest: payload.interest,
+    propertyAddress: payload.address,
+    city: payload.city,
+    idealTimeframe: payload.timeframe,
+    pageUrl: window.location.href
+  };
+
+  try {
+    const response = await fetch('/api/fub-lead', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json' 
+      },
+      body: JSON.stringify(fubPayload)
+    });
+
+    const data: ApiResponse = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Failed to submit lead');
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Lead submission error:', error);
+    throw error;
+  }
 };
 
 /**
- * Placeholder for Follow Up Boss Integration
- * 
- * Instructions:
- * 1. Get your API Key from Follow Up Boss (Admin > API)
- * 2. Use the 'events' endpoint to post a new registration event
- *    POST https://api.followupboss.com/v1/events
- * 
- * Payload structure for FUB:
- * {
- *   "source": "Sebastian Street Website",
- *   "system": "Custom Website",
- *   "type": "Registration",
- *   "person": {
- *     "firstName": payload.name.split(' ')[0],
- *     "lastName": payload.name.split(' ').slice(1).join(' '),
- *     "emails": [{ "value": payload.email }],
- *     "phones": [{ "value": payload.phone }],
- *     "addresses": payload.address ? [{ 
- *       "type": "home", 
- *       "street": payload.address,
- *       "city": payload.city 
- *     }] : undefined
- *   },
- *   "message": payload.message
- * }
+ * Validate lead data before submission
+ * @param payload - Lead form data
+ * @returns Object with isValid boolean and errors array
  */
-const sendLeadToFollowUpBoss = (payload: LeadPayload) => {
-  // console.log("Sending to Follow Up Boss:", payload);
-  // Implementation goes here
-};
+export const validateLeadData = (payload: Partial<LeadPayload>): { isValid: boolean; errors: string[] } => {
+  const errors: string[] = [];
 
+  // Required fields
+  if (!payload.name?.trim()) {
+    errors.push('Full name is required');
+  }
+
+  if (!payload.email?.trim()) {
+    errors.push('Email is required');
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+    errors.push('Please enter a valid email address');
+  }
+
+  // Phone validation (recommended but not required)
+  if (payload.phone && !/^[\d\s\-\(\)\+]+$/.test(payload.phone)) {
+    errors.push('Please enter a valid phone number');
+  }
+
+  // Selling-specific validation
+  const isSellingInterest = payload.interest === 'Selling' || payload.interest === 'Both';
+  if (isSellingInterest) {
+    if (!payload.address?.trim()) {
+      errors.push('Property address is required when selling');
+    }
+    if (!payload.city?.trim()) {
+      errors.push('City is required when selling');
+    }
+    if (!payload.timeframe) {
+      errors.push('Please select a timeframe');
+    }
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors
+  };
+};
