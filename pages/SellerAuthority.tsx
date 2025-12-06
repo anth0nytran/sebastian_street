@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { TrendingUp, Check, BarChart3, Layout, Clock, DollarSign, Award, ArrowUpRight, Phone, Mail, MapPin, Star, Instagram, Linkedin, Facebook, Home, ChevronLeft, ChevronRight } from 'lucide-react';
 import LeadForm from '../components/LeadForm';
 import { Marquee } from '../components/ui/marquee';
@@ -98,6 +98,117 @@ const SOCIAL_PROOF_ITEMS = [
   }
 ] as const;
 
+const AnimatedStat = ({ 
+  end, 
+  duration = 2000, 
+  label, 
+  prefix = "", 
+  suffix = "", 
+  staticValue 
+}: { 
+  end?: number; 
+  duration?: number; 
+  label: string; 
+  prefix?: string; 
+  suffix?: string; 
+  staticValue?: string; 
+}) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated && end !== undefined) {
+          setHasAnimated(true);
+          let start = 0;
+          const increment = end / (duration / 16);
+          const timer = setInterval(() => {
+            start += increment;
+            if (start >= end) {
+              setCount(end);
+              clearInterval(timer);
+            } else {
+              setCount(Math.floor(start));
+            }
+          }, 16);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [end, duration, hasAnimated]);
+
+  return (
+    <div ref={ref} className="bg-[#050505] p-6 rounded-xl border border-white/10 shadow-[0_0_25px_rgba(0,0,0,0.4)] flex flex-col justify-center h-full">
+      <div className="text-3xl font-bold text-white mb-1">
+        {staticValue ? staticValue : `${prefix}${count.toLocaleString()}${suffix}`}
+      </div>
+      <div className="text-sm text-gray-500 font-medium uppercase tracking-wide">{label}</div>
+    </div>
+  );
+};
+
+const AnimatedSpan = ({ 
+  end, 
+  duration = 2000, 
+  decimals = 0,
+  suffix = ""
+}: { 
+  end: number; 
+  duration?: number; 
+  decimals?: number;
+  suffix?: string;
+}) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          let start = 0;
+          const increment = end / (duration / 16);
+          const timer = setInterval(() => {
+            start += increment;
+            if (start >= end) {
+              setCount(end);
+              clearInterval(timer);
+            } else {
+              setCount(start);
+            }
+          }, 16);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [end, duration, hasAnimated]);
+
+  const display = decimals > 0 
+    ? count.toFixed(decimals) 
+    : Math.floor(count).toLocaleString();
+
+  return (
+    <span ref={ref} className="tabular-nums inline-block">
+      {display}{suffix}
+    </span>
+  );
+};
+
 const SellerAuthority: React.FC = () => {
   const reviewScrollRef = useRef<HTMLDivElement>(null);
   const salesImages = [sold4Months, sold8Months, sold12Months, sold12MonthsChino];
@@ -193,9 +304,8 @@ const SellerAuthority: React.FC = () => {
       <nav className="absolute top-0 w-full z-50 border-b border-white/10 bg-[#050505]/70 backdrop-blur-sm">
         <div className="container mx-auto px-4 sm:px-6 h-20 flex justify-between items-center">
           <div className="flex items-center gap-3">
-             <img src={HEADSHOT_SRC} alt="Sebastian Street" className="w-11 h-11 rounded-full object-cover border border-white/20 shadow-lg shadow-black/40" />
              <div className="flex flex-col">
-               <span className="text-xl font-serif font-bold tracking-tight text-white">Sebastian Street</span>
+               <span className="text-xl font-serif font-bold tracking-[0.05em] text-white">Sebastian Street</span>
                <span className="text-[10px] uppercase tracking-widest text-slate-400">Realtor® | DRE #02208742</span>
              </div>
           </div>
@@ -228,7 +338,7 @@ const SellerAuthority: React.FC = () => {
               Sell Your Home for <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-600">Maximum Value</span> — With Less Stress.
             </h1>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed font-light mb-10 px-1">
+            <p className="text-base sm:text-lg lg:text-xl text-white max-w-2xl mx-auto leading-relaxed font-light mb-10 px-1">
               Don't leave money on the table. I combine data-driven pricing, hands-on home prep, and "Showcase" marketing to get you the highest possible return in today's shifting market.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -247,9 +357,20 @@ const SellerAuthority: React.FC = () => {
                   <Star size={14} fill="currentColor" />
                   <Star size={14} fill="currentColor" />
                </div>
-               <span className="font-medium text-gray-300">5.0 Rating (3,233 Verified Team Reviews)</span>
+               <span className="font-medium text-gray-300">
+                  <span className="text-white font-bold"><AnimatedSpan end={5.0} decimals={1} duration={1000} /></span> Rating 
+                  (<span className="text-white font-bold"><AnimatedSpan end={3233} duration={2000} /></span> Verified Team Reviews)
+               </span>
                <span className="hidden sm:inline text-gray-600">•</span>
-               <span className="text-gray-300">3+ Years Experience</span>
+               <span className="text-gray-300">
+                  <span className="text-white font-bold"><AnimatedSpan end={25} duration={1500} suffix="+" /></span> Years Team Experience
+               </span>
+            </div>
+            <div className="mt-7 flex flex-wrap justify-center gap-4 text-sm font-semibold">
+               <a href={SOCIAL_LINKS.zillow} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#d4af37] transition-colors">Zillow</a>
+               <a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#d4af37] transition-colors">LinkedIn</a>
+               <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#d4af37] transition-colors">Facebook</a>
+               <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#d4af37] transition-colors">Instagram</a>
             </div>
           </div>
         </div>
@@ -339,22 +460,10 @@ const SellerAuthority: React.FC = () => {
                  </p>
                  
                  <div className="grid grid-cols-2 gap-4 mb-8">
-                    <div className="bg-[#050505] p-6 rounded-xl border border-white/10 shadow-[0_0_25px_rgba(0,0,0,0.4)]">
-                       <div className="text-3xl font-bold text-white mb-1">5.0 <span className="text-[#d4af37] text-lg">★</span></div>
-                       <div className="text-sm text-gray-500 font-medium uppercase tracking-wide">Client Rating</div>
-                    </div>
-                    <div className="bg-[#050505] p-6 rounded-xl border border-white/10 shadow-[0_0_25px_rgba(0,0,0,0.4)]">
-                       <div className="text-3xl font-bold text-white mb-1">$424K</div>
-                       <div className="text-sm text-gray-500 font-medium uppercase tracking-wide">Avg Sale Price</div>
-                    </div>
-                    <div className="bg-[#050505] p-6 rounded-xl border border-white/10 shadow-[0_0_25px_rgba(0,0,0,0.4)]">
-                       <div className="text-3xl font-bold text-white mb-1">7</div>
-                       <div className="text-sm text-gray-500 font-medium uppercase tracking-wide">Total Sales</div>
-                    </div>
-                    <div className="bg-[#050505] p-6 rounded-xl border border-white/10 shadow-[0_0_25px_rgba(0,0,0,0.4)]">
-                       <div className="text-3xl font-bold text-white mb-1">100%</div>
-                       <div className="text-sm text-gray-500 font-medium uppercase tracking-wide">Client Satisfaction</div>
-                    </div>
+                    <AnimatedStat end={418} label="Sales Last 12 Months" />
+                    <AnimatedStat end={5091} label="Total Sales" />
+                    <AnimatedStat staticValue="$10k - $8.5M" label="Price Range" />
+                    <AnimatedStat end={695} prefix="$" suffix="k" label="Average Price" />
                  </div>
 
                  <div className="flex flex-wrap gap-2">
@@ -509,14 +618,28 @@ const SellerAuthority: React.FC = () => {
                   <div className="inline-block px-3 py-1 bg-[#d4af37]/10 text-[#d4af37] rounded text-xs font-bold uppercase tracking-[0.4em] mb-6 w-fit">
                      Free Home Valuation
                   </div>
-                  <h2 className="text-4xl lg:text-5xl font-serif font-medium text-white mb-6">
+                  <h2 className="text-4xl lg:text-5xl font-serif font-medium text-white mb-8">
                      What is Your Home <br/><span className="text-[#d4af37]">Really</span> Worth?
                   </h2>
+
+                  <div className="flex items-center gap-6 p-8 bg-[#050505]/60 rounded-xl border border-white/10 mb-8">
+                     <img
+                       src={HEADSHOT_SRC}
+                       alt="Sebastian Street professional headshot"
+                       className="w-24 h-24 rounded-full object-cover border border-white/20"
+                     />
+                     <div>
+                       <div className="text-white font-bold text-lg uppercase tracking-wide">Sebastian Street</div>
+                       <div className="text-sm text-gray-400">Your Local Expert · Top Zillow Premier Agent</div>
+                       <div className="text-xs text-gray-500 mt-1">eHomes | 5.0★ · 3,233 team reviews</div>
+                     </div>
+                  </div>
+
                   <p className="text-gray-400 text-lg mb-8 leading-relaxed">
                      Automated estimates can be off by tens of thousands. Get a comprehensive, human-generated report that accounts for your home's unique upgrades and the latest market shifts.
                   </p>
                   
-                  <ul className="space-y-4 mb-8">
+                  <ul className="space-y-4">
                      <li className="flex items-center gap-3 text-gray-300">
                         <div className="w-6 h-6 rounded-full bg-[#d4af37]/10 text-[#d4af37] flex items-center justify-center flex-shrink-0"><Check size={14} /></div>
                         100% Free & No Obligation
@@ -530,19 +653,6 @@ const SellerAuthority: React.FC = () => {
                         Delivered within 24 Hours
                      </li>
                   </ul>
-
-                  <div className="flex items-center gap-4 p-5 bg-[#050505]/60 rounded-xl border border-white/10">
-                     <img
-                       src={HEADSHOT_SRC}
-                       alt="Sebastian Street professional headshot"
-                       className="w-12 h-12 rounded-full object-cover border border-white/20"
-                     />
-                     <div>
-                       <div className="text-white font-bold text-sm uppercase tracking-wide">Sebastian Street</div>
-                       <div className="text-xs text-gray-400">Your Local Expert · Top Zillow Premier Agent</div>
-                       <div className="text-[10px] text-gray-500 mt-1">eHomes | 5.0★ · 3,233 team reviews</div>
-                     </div>
-                  </div>
                </div>
                
                <div className="lg:w-1/2 bg-[#050505] p-8 lg:p-12 border-l border-white/5">
