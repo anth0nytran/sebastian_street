@@ -17,11 +17,19 @@ export default async function handler(req, res) {
     }
 
     const isSellingInterest = interest === 'Selling' || interest === 'Both';
-    if (isSellingInterest && (!propertyAddress || !city)) {
-      return res.status(400).json({
-        success: false,
-        error: 'Property address and city are required for selling inquiries'
-      });
+    if (isSellingInterest) {
+      if (!propertyAddress || !city) {
+        return res.status(400).json({
+          success: false,
+          error: 'Property address and city are required for selling inquiries'
+        });
+      }
+      if (!idealTimeframe) {
+        return res.status(400).json({
+          success: false,
+          error: 'Ideal timeframe is required for selling inquiries'
+        });
+      }
     }
 
     const payload = buildFubPayload({

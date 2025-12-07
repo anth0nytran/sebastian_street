@@ -75,8 +75,11 @@ export function buildFubPayload(leadData) {
   
   const { firstName, lastName } = parseName(fullName);
   
-  const source = process.env.FUB_SOURCE || 'Sebastian Street Website';
-  const system = process.env.FUB_X_SYSTEM || 'SebastianStreetRealty';
+  const source = process.env.FUB_SOURCE || 'Website';
+  const system = process.env.FUB_X_SYSTEM || 'Website';
+
+  // Choose a more specific type to make the UI clearer
+  const type = (interest === 'Selling' || interest === 'Both') ? 'Seller Inquiry' : 'General Inquiry';
   
   // Build person object
   const person = {
@@ -98,8 +101,9 @@ export function buildFubPayload(leadData) {
   // Build the events payload
   const payload = {
     source,
+    campaign: { source }, // helps FUB show source visibly
     system,
-    type: 'General Inquiry',
+    type,
     message: buildMessage(leadData),
     person
   };
@@ -154,7 +158,24 @@ export async function sendToFollowUpBoss(payload) {
     headers['X-System-Key'] = xSystemKey;
   }
   
-  console.log('📤 Sending to FUB:', JSON.stringify(payload, null, 2));
+  // Log request without PII for debugging (sanitized version)
+  const sanitizedPayload = {
+    source: payload.source,
+    system: payload.system,
+    type: payload.type,
+    message: payload.message,
+    person: {
+      firstName: payload.person?.firstName ? '[REDACTED]' : undefined,
+      lastName: payload.person?.lastName ? '[REDACTED]' : undefined,
+      emails: payload.person?.emails?.length ? '[REDACTED]' : undefined,
+      phones: payload.person?.phones?.length ? '[REDACTED]' : undefined,
+      addresses: payload.person?.addresses?.length ? '[REDACTED]' : undefined
+    },
+    propertyStreet: payload.propertyStreet ? '[REDACTED]' : undefined,
+    propertyCity: payload.propertyCity ? '[REDACTED]' : undefined,
+    sourceUrl: payload.sourceUrl
+  };
+  console.log('📤 Sending to FUB (sanitized):', JSON.stringify(sanitizedPayload, null, 2));
   
   try {
     const response = await fetch('https://api.followupboss.com/v1/events', {
