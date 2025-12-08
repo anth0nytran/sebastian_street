@@ -460,8 +460,8 @@ const SellerAuthority: React.FC = () => {
                  </p>
                  
                  <div className="grid grid-cols-2 gap-4 mb-8">
-                    <AnimatedStat end={418} label="Sales Last 12 Months" />
-                    <AnimatedStat end={5091} label="Total Sales" />
+                    <AnimatedStat end={418} label="Team Sales Last 12 Months" />
+                    <AnimatedStat end={5091} label="Total Team Sales" />
                     <AnimatedStat staticValue="$10k - $8.5M" label="Price Range" />
                     <AnimatedStat end={695} prefix="$" suffix="k" label="Average Price" />
                  </div>

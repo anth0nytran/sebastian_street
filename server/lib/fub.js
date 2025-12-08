@@ -6,6 +6,24 @@
  */
 
 /**
+ * Clean an environment variable value by:
+ * - Trimming whitespace
+ * - Removing surrounding quotes (single or double)
+ * @param {string|undefined} value - The env var value
+ * @returns {string|undefined}
+ */
+function cleanEnvVar(value) {
+  if (!value || typeof value !== 'string') return undefined;
+  let cleaned = value.trim();
+  // Remove surrounding quotes if present (handles "value" or 'value')
+  if ((cleaned.startsWith('"') && cleaned.endsWith('"')) ||
+      (cleaned.startsWith("'") && cleaned.endsWith("'"))) {
+    cleaned = cleaned.slice(1, -1);
+  }
+  return cleaned || undefined;
+}
+
+/**
  * Parse a full name into first and last name
  * @param {string} fullName - The complete name string
  * @returns {{ firstName: string, lastName: string }}
@@ -75,17 +93,20 @@ export function buildFubPayload(leadData) {
   
   const { firstName, lastName } = parseName(fullName);
   
-  // Ensure source has a valid value - use nullish coalescing and trim to catch empty strings
-  const rawSource = process.env.FUB_SOURCE;
-  const source = (rawSource && rawSource.trim()) ? rawSource.trim() : 'Sebastian Street Website';
+  // Clean env vars (removes surrounding quotes and trims whitespace)
+  const cleanedSource = cleanEnvVar(process.env.FUB_SOURCE);
+  const cleanedSystem = cleanEnvVar(process.env.FUB_X_SYSTEM);
   
-  const rawSystem = process.env.FUB_X_SYSTEM;
-  const system = (rawSystem && rawSystem.trim()) ? rawSystem.trim() : 'SebastianStreetWebsite';
+  // Use cleaned values or defaults
+  const source = cleanedSource || 'Sebastian Street Website';
+  const system = cleanedSystem || 'SebastianStreetWebsite';
   
   // Debug log to help identify env var issues
   console.log('🔍 FUB Config:', { 
-    FUB_SOURCE_ENV: rawSource === undefined ? 'NOT SET' : `"${rawSource}"`,
-    FUB_X_SYSTEM_ENV: rawSystem === undefined ? 'NOT SET' : `"${rawSystem}"`,
+    FUB_SOURCE_RAW: process.env.FUB_SOURCE,
+    FUB_SOURCE_CLEANED: cleanedSource,
+    FUB_X_SYSTEM_RAW: process.env.FUB_X_SYSTEM,
+    FUB_X_SYSTEM_CLEANED: cleanedSystem,
     source_used: source,
     system_used: system
   });
@@ -144,9 +165,9 @@ export function buildFubPayload(leadData) {
  * @returns {Promise<{ success: boolean, data?: any, error?: string }>}
  */
 export async function sendToFollowUpBoss(payload) {
-  const apiKey = process.env.FUB_API_KEY;
-  const xSystem = process.env.FUB_X_SYSTEM;
-  const xSystemKey = process.env.FUB_X_SYSTEM_KEY;
+  const apiKey = cleanEnvVar(process.env.FUB_API_KEY);
+  const xSystem = cleanEnvVar(process.env.FUB_X_SYSTEM);
+  const xSystemKey = cleanEnvVar(process.env.FUB_X_SYSTEM_KEY);
   
   if (!apiKey) {
     console.error('FUB_API_KEY is not configured');
@@ -162,13 +183,18 @@ export async function sendToFollowUpBoss(payload) {
     'Authorization': `Basic ${authString}`
   };
   
-  // Only add X-System headers if provided
+  // Only add X-System headers if provided (required for custom integrations)
   if (xSystem) {
     headers['X-System'] = xSystem;
   }
   if (xSystemKey) {
     headers['X-System-Key'] = xSystemKey;
   }
+  
+  console.log('🔐 FUB Headers:', {
+    'X-System': xSystem || '(not set)',
+    'X-System-Key': xSystemKey ? '***configured***' : '(not set)'
+  });
   
   // Log request without PII for debugging (sanitized version)
   const sanitizedPayload = {
@@ -197,6 +223,17 @@ export async function sendToFollowUpBoss(payload) {
     });
     
     const data = await response.json();
+    
+    // Log full response for debugging (check what FUB actually stored)
+    console.log('📥 FUB API Response:', {
+      status: response.status,
+      id: data.id,
+      source: data.source,
+      stage: data.stage,
+      assignedTo: data.assignedTo,
+      // Log the full response to see all fields FUB returns
+      fullResponse: JSON.stringify(data, null, 2)
+    });
     
     if (response.ok) {
       return { success: true, data };
