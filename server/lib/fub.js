@@ -75,8 +75,20 @@ export function buildFubPayload(leadData) {
   
   const { firstName, lastName } = parseName(fullName);
   
-  const source = process.env.FUB_SOURCE || 'Website';
-  const system = process.env.FUB_X_SYSTEM || 'Website';
+  // Ensure source has a valid value - use nullish coalescing and trim to catch empty strings
+  const rawSource = process.env.FUB_SOURCE;
+  const source = (rawSource && rawSource.trim()) ? rawSource.trim() : 'Sebastian Street Website';
+  
+  const rawSystem = process.env.FUB_X_SYSTEM;
+  const system = (rawSystem && rawSystem.trim()) ? rawSystem.trim() : 'SebastianStreetWebsite';
+  
+  // Debug log to help identify env var issues
+  console.log('🔍 FUB Config:', { 
+    FUB_SOURCE_ENV: rawSource === undefined ? 'NOT SET' : `"${rawSource}"`,
+    FUB_X_SYSTEM_ENV: rawSystem === undefined ? 'NOT SET' : `"${rawSystem}"`,
+    source_used: source,
+    system_used: system
+  });
 
   // Choose a more specific type to make the UI clearer
   const type = (interest === 'Selling' || interest === 'Both') ? 'Seller Inquiry' : 'General Inquiry';
