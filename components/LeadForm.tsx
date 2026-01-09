@@ -222,7 +222,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ variant = 'light', title = "Get a F
               : 'bg-slate-900 text-white hover:bg-slate-800 shadow-lg shadow-slate-900/20'
           }`}
         >
-          {loading ? <Loader2 className="animate-spin" /> : <>Get My Free Report <Send size={18} /></>}
+          {loading ? <Loader2 className="animate-spin" /> : <>Submit Inquiry <Send size={18} /></>}
         </button>
         
         <p className={`text-[10px] text-center mt-4 leading-normal ${variant === 'dark' ? 'text-gray-500' : 'text-slate-400'}`}>
