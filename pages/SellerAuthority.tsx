@@ -345,7 +345,7 @@ const SellerAuthority: React.FC = () => {
               <a href="#contact" className="w-full sm:w-auto text-center bg-gradient-to-r from-[#d4af37] to-[#b88d2c] text-[#050505] px-8 py-4 rounded-lg font-bold hover:brightness-110 transition-all text-lg shadow-[0_0_25px_rgba(212,175,55,0.35)]">
                 Get Your Free Home Value Report
               </a>
-              <a href="tel:6266322559" className="w-full sm:w-auto border border-white/15 text-white px-8 py-4 rounded-lg font-bold hover:bg-white/5 transition-colors text-lg flex items-center justify-center gap-2">
+              <a href="https://calendly.com/sebastian-diamondstreetrealty/new-meeting" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto border border-white/15 text-white px-8 py-4 rounded-lg font-bold hover:bg-white/5 transition-colors text-lg flex items-center justify-center gap-2">
                 <Phone size={18} /> Book a Strategy Call
               </a>
             </div>
@@ -728,6 +728,9 @@ const SellerAuthority: React.FC = () => {
                   <Home size={12} /> Equal Housing Opportunity
                </div>
             </div>
+            <p className="text-center mt-6 text-[10px] text-gray-600/70">
+               <a href="https://quicklaunchweb.us" target="_blank" rel="noopener noreferrer" className="hover:text-gray-500 transition-colors">Website by QuickLaunchWeb</a>
+            </p>
          </div>
       </footer>
     </div>

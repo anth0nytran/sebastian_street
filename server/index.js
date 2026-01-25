@@ -89,7 +89,7 @@ app.post('/api/fub-lead', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
   console.log(`   FUB endpoint: POST /api/fub-lead`);
   
@@ -103,5 +103,17 @@ app.listen(PORT, () => {
   } else {
     console.log(`✅ FUB integration configured`);
   }
+});
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`\n❌ Port ${PORT} is already in use.`);
+    console.error(`   Another process is using port ${PORT}. Either:`);
+    console.error(`   - Stop the other process using port ${PORT}`);
+    console.error(`   - Or set SERVER_PORT to a different port in .env (e.g. SERVER_PORT=3002)`);
+    console.error(`   - Vite proxies /api to port 3001 by default; if you change SERVER_PORT, update vite.config.ts proxy target.\n`);
+    process.exit(1);
+  }
+  throw err;
 });
 
