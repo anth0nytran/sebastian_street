@@ -1,4 +1,10 @@
 import { Sale, ServiceArea } from './types';
+import sold4Months from './assets/sold_4_months.jpg';
+import sold8Months from './assets/sold_8_months.jpg';
+import sold12Months from './assets/sold_12_months.jpg';
+import sold12MonthsChino from './assets/sold_12_months_chino.jpg';
+import whittierImg from './assets/whiter.jpeg';
+import tustinImg from './assets/tustin.jpeg';
 
 export const AGENT_NAME = "Sebastian Street";
 export const BROKERAGE = "eHomes | The Toro Group";
@@ -7,7 +13,39 @@ export const EMAIL = "sebastian@diamondstreetrealty.com";
 export const ADDRESS = "11760 Central Ave Suite 125, Chino, CA 91710";
 export const EXPERIENCE_YEARS = 3;
 
+/** URL for "Book a Strategy Call" buttons/links (Calendly) */
+export const BOOK_STRATEGY_CALL_URL = "https://calendly.com/sebastian-diamondstreetrealty/new-meeting";
+export const CALHFA_DREAM_URL = "https://www.calhfa.ca.gov/dream/";
+
 export const SALES: Sale[] = [
+  {
+    id: 101, // New SALE
+    address: "6226 Washington Ave",
+    city: "Whittier",
+    zip: "90601",
+    price: 865000,
+    formattedPrice: "$865,000",
+    beds: 2,
+    baths: 2,
+    sqft: 1713,
+    date: "Sold 9 days ago",
+    represented: "Buyer",
+    image: whittierImg
+  },
+  {
+    id: 102, // New SALE
+    address: "1777 Mitchell Ave APT 29",
+    city: "Tustin",
+    zip: "92780",
+    price: 685000,
+    formattedPrice: "$685,000",
+    beds: 5,
+    baths: 3,
+    sqft: 1472,
+    date: "Sold 18 days ago",
+    represented: "Buyer",
+    image: tustinImg
+  },
   {
     id: 1,
     address: "2823 E Schumacher Paseo",
@@ -20,7 +58,7 @@ export const SALES: Sale[] = [
     sqft: 1593,
     date: "Sold 3 months ago",
     represented: "Buyer",
-    image: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?auto=format&fit=crop&w=800&q=80"
+    image: sold4Months
   },
   {
     id: 2,
@@ -34,7 +72,7 @@ export const SALES: Sale[] = [
     sqft: 1126,
     date: "Sold 8 months ago",
     represented: "Buyer",
-    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80"
+    image: sold8Months
   },
   {
     id: 3,
@@ -48,7 +86,7 @@ export const SALES: Sale[] = [
     sqft: 1566,
     date: "Sold 1 year ago",
     represented: "Buyer",
-    image: "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?auto=format&fit=crop&w=800&q=80"
+    image: sold12Months
   },
   {
     id: 4,
@@ -62,7 +100,7 @@ export const SALES: Sale[] = [
     sqft: 1248,
     date: "Sold 1 year ago",
     represented: "Buyer",
-    image: "https://images.unsplash.com/photo-1484154218962-a1c002085d2f?auto=format&fit=crop&w=800&q=80"
+    image: sold12MonthsChino
   },
   {
     id: 5,
