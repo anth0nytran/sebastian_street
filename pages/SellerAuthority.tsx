@@ -343,7 +343,7 @@ const SellerAuthority: React.FC = () => {
               <a href="#contact" className="w-full sm:w-auto text-center bg-gradient-to-r from-[#d4af37] to-[#b88d2c] text-[#050505] px-8 py-4 rounded-lg font-bold hover:brightness-110 transition-all text-lg shadow-[0_0_25px_rgba(212,175,55,0.35)]">
                 Get Your Free Home Value Report
               </a>
-              <a href="#contact" className="w-full sm:w-auto border border-white/15 text-white px-8 py-4 rounded-lg font-bold hover:bg-white/5 transition-colors text-lg flex items-center justify-center gap-2">
+              <a href="https://ehomesteam.hifello.com/p/sebastian-street/69725caeffc24c58215993e6" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto border border-white/15 text-white px-8 py-4 rounded-lg font-bold hover:bg-white/5 transition-colors text-lg flex items-center justify-center gap-2">
                 <Home size={18} /> CalHFA Dream for All
               </a>
             </div>
