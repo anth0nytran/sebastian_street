@@ -5,7 +5,6 @@ import SEO, { AGENT_ID } from "@/hooks/useSEO";
 import { AREAS, FEATURED_AREAS, SITE_URL, AGENT, SERVICES, PHOTOS, type AreaDef } from "@/data/site";
 import LeadForm from "@/components/LeadForm";
 import { Reveal, Eyebrow, SectionHead, ActionLink, FaqSection, PhotoBand } from "@/components/ui";
-import { Backdrop } from "@/components/Backdrop";
 import { cn } from "@/lib/utils";
 
 /**
@@ -339,20 +338,6 @@ function toProseList(items: readonly string[], max = 4): string {
  * quietly drift apart as one gets tweaked.
  */
 function HeroShell({ area, children }: { area: AreaDef; children: ReactNode }) {
-    if (!area.image) {
-        return (
-            <Backdrop
-                ghost={area.name
-                    .split(" ")
-                    .map((w) => w[0])
-                    .join("")}
-                className="flex min-h-[62svh] flex-col justify-end pb-14 pt-36 md:pb-20"
-            >
-                {children}
-            </Backdrop>
-        );
-    }
-
     return (
         <section className="on-dark relative flex min-h-[62svh] flex-col justify-end overflow-hidden bg-black pb-14 pt-36 md:pb-20">
             <div className="absolute inset-0 z-0">
@@ -367,6 +352,11 @@ function HeroShell({ area, children }: { area: AreaDef; children: ReactNode }) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/35" />
             </div>
             <div className="relative z-10 w-full">{children}</div>
+            {area.imageCredit && (
+                <span className="pointer-events-none absolute bottom-3 right-4 z-10 font-sans text-[0.5rem] font-bold uppercase tracking-[0.18em] text-white/30 md:right-8">
+                    {area.imageCredit}
+                </span>
+            )}
         </section>
     );
 }

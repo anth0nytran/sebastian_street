@@ -310,15 +310,34 @@ surf, palms. Reused on an Inland Empire site they contradict every geographic
 claim the copy makes, and alt text naming a city the photo isn't of is simply
 false.
 
-**When real local photography doesn't exist, don't fake it.** `Backdrop`
-renders a CSS drafting-grid surface with a gold corner wash and an oversized
-ghost glyph: zero bytes, no image request, and it cannot be wrong.
+**When real local photography doesn't exist, don't fake it — and don't leave a
+hole either.** There are two honest answers, and this build ended up using the
+second:
 
-This site now runs on the client's own Inland Empire photography, so most
-surfaces use `PhotoBand`. The fallback still matters and is still wired: three
-of the eight city pages have no photo *of that city*, and they render
-`Backdrop` rather than borrowing a neighbour's view. That's the rule to keep —
-`AreaDef.image` is optional, and `HeroShell` branches on it.
+1. `Backdrop` renders a CSS drafting-grid surface with a gold corner wash and an
+   oversized ghost glyph: zero bytes, no image request, and it cannot be wrong.
+   Reach for it when a client has supplied no usable photography at all. The
+   component stays in the repo for exactly that case even though this site no
+   longer renders it.
+2. **Regional photography plus a visible credit.** Seven of the fifteen cities
+   here have no photograph of themselves. They now carry a regional Inland
+   Empire photo with `AreaDef.imageCredit` printed in the hero corner —
+   *"Regional photograph · Inland Empire"*, or on Diamond Bar, *"Photographed in
+   Chino Hills · across the county line"*.
+
+   The credit is what makes this honest. Correct alt text is not sufficient on
+   its own: a hero image on a page titled "Pomona" reads as Pomona to every
+   sighted visitor regardless of what the `alt` attribute says. A visible credit
+   line is how editorial publications have always used stock and file
+   photography, it costs one line of 8px type, and it converts a quiet false
+   implication into an explicit, accurate one.
+
+**Audit the references, not just the intent.** `PHOTOS.chinoTheatre` pointed at
+`/images/chino-theatre.webp` for weeks while that file did not exist — invisible
+because nothing rendered the entry yet. A ten-line script that walks every
+`"/images/…"` string in `src/` and `index.html` and stats the file catches this
+class of bug instantly; run it before every deploy. `scripts/process-photo.py`
+is the converter that produces those files.
 
 Three practical notes once real photos arrive:
 

@@ -1,5 +1,5 @@
 import SEO from "@/hooks/useSEO";
-import { FEATURED_AREAS, SERVICES } from "@/data/site";
+import { FEATURED_AREAS, SERVICES, PHOTOS } from "@/data/site";
 import { Link } from "react-router-dom";
 import { ActionLink, Eyebrow } from "@/components/ui";
 
@@ -9,7 +9,18 @@ export default function NotFound() {
             {/* noindex, follow: the page shouldn't be indexed, but crawlers
                 should still traverse the recovery links below it. */}
             <SEO title="Page Not Found" description="The page you're looking for doesn't exist." path="/404" noindex />
-            <section className="on-dark flex min-h-[80svh] flex-col items-center justify-center bg-black px-6 py-40 text-center">
+            <section className="on-dark relative flex min-h-[80svh] flex-col items-center justify-center overflow-hidden bg-black px-6 py-40 text-center">
+                <div className="absolute inset-0 z-0">
+                    <img
+                        src={PHOTOS.chinoHillsAerial.src}
+                        alt={PHOTOS.chinoHillsAerial.alt}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/80" />
+                </div>
+                <div className="relative z-10 flex w-full flex-col items-center">
                 <Eyebrow tone="dark" className="mb-6">Error 404</Eyebrow>
                 <h1 className="mb-7 text-d1 uppercase text-white">Page Not Found</h1>
                 <p className="mx-auto mb-11 max-w-md text-body text-white/50 text-pretty">
@@ -38,6 +49,7 @@ export default function NotFound() {
                             </li>
                         ))}
                     </ul>
+                </div>
                 </div>
             </section>
         </>
