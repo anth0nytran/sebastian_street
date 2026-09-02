@@ -1,57 +1,240 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Umami Analytics -->
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="bf395b91-6e03-4eb9-9c0f-36515bd3a6af"></script>
-    
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sebastian Street Realtor® | Sell Your Orange County Home</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              serif: ['Playfair Display', 'serif'],
-            },
-            colors: {
-              brand: {
-                dark: '#1e293b',
-                gold: '#d4af37',
-                accent: '#3b82f6',
-                light: '#f8fafc'
+<!doctype html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="Sebastian Street" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- Local SEO geo tags. Coordinates are Chino Hills — the primary market —
+       not the Chino office, because the market centroid is what these signal. -->
+  <meta name="geo.region" content="US-CA" />
+  <meta name="geo.placename" content="Chino Hills, California" />
+  <meta name="geo.position" content="33.9898;-117.7326" />
+  <meta name="ICBM" content="33.9898, -117.7326" />
+
+  <link rel="icon" type="image/webp" href="/images/sebastian-street.webp" />
+  <link rel="apple-touch-icon" href="/images/sebastian-street.webp" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700;800;900&display=swap"
+    rel="stylesheet" />
+
+  <meta property="og:site_name" content="Sebastian Street, REALTOR®" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <script defer src="https://cloud.umami.is/script.js"
+    data-website-id="bf395b91-6e03-4eb9-9c0f-36515bd3a6af"></script>
+
+  <!--
+    SITE-WIDE ENTITY GRAPH.
+
+    This is the identity layer. Page-level metadata (title, description,
+    canonical, OG/Twitter, Service/FAQ/Breadcrumb/Review schema) is owned by
+    src/hooks/useSEO.tsx and injected into the app-head placeholder below
+    during prerendering. Do not duplicate page-level tags here.
+
+    The @id values are the contract: every page's schema references these nodes
+    rather than minting its own. That's what lets an answer engine assemble one
+    coherent entity — "Sebastian Street, REALTOR®, DRE #02208742, Chino CA" —
+    out of sixteen separate pages.
+  -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://www.diamondstreetrealty.com/#website",
+          "url": "https://www.diamondstreetrealty.com/",
+          "name": "Sebastian Street, REALTOR®",
+          "description": "Chino Hills and greater Inland Empire real estate — buying, selling and investment representation.",
+          "inLanguage": "en-US",
+          "publisher": { "@id": "https://www.diamondstreetrealty.com/#real-estate-agent" }
+        },
+        {
+          "@type": ["RealEstateAgent", "LocalBusiness"],
+          "@id": "https://www.diamondstreetrealty.com/#real-estate-agent",
+          "name": "Sebastian Street, REALTOR®",
+          "alternateName": "Sebastian Street Real Estate",
+          "description": "Chino Hills and greater Inland Empire REALTOR® helping clients buy, sell and invest across San Bernardino, Riverside and Los Angeles counties — including Chino, Rancho Cucamonga, Corona, Riverside, San Bernardino, Moreno Valley and Fontana. CA DRE #02208742.",
+          "url": "https://www.diamondstreetrealty.com/",
+          "priceRange": "$$",
+          "telephone": "+1-626-632-2559",
+          "email": "sebastian@diamondstreetrealty.com",
+          "image": "https://www.diamondstreetrealty.com/images/sebastian-street.webp",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "11760 Central Ave Suite 125",
+            "addressLocality": "Chino",
+            "addressRegion": "CA",
+            "postalCode": "91710",
+            "addressCountry": "US"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 34.0122,
+            "longitude": -117.6889
+          },
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+              "opens": "08:00",
+              "closes": "20:00"
+            }
+          ],
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "5.0",
+            "bestRating": "5",
+            "worstRating": "1",
+            "ratingCount": "11",
+            "reviewCount": "11"
+          },
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Real Estate Services",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Home Selling / Listing Representation",
+                  "description": "Full-service listing representation across Chino Hills and the Inland Empire — pricing built from closed sales matched to the specific tract, managed preparation and photography, and negotiation through close.",
+                  "url": "https://www.diamondstreetrealty.com/sell"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Home Buying / Buyer Representation",
+                  "description": "Buyer representation across the Inland Empire including first-time buyer guidance and CalHFA Dream For All down payment assistance.",
+                  "url": "https://www.diamondstreetrealty.com/buy"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Investment Property Advisory",
+                  "description": "Investment property representation underwritten on real carrying costs — reassessed tax basis, Mello-Roos, HOA and vacancy — plus 1031 exchange support.",
+                  "url": "https://www.diamondstreetrealty.com/invest"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Free Home Valuation",
+                  "description": "Complimentary written home valuation built from closed comparable sales matched to your tract, delivered within 24 hours.",
+                  "url": "https://www.diamondstreetrealty.com/contact"
+                }
+              }
+            ]
+          },
+          "areaServed": [
+            { "@type": "City", "name": "Chino Hills", "containedInPlace": { "@type": "AdministrativeArea", "name": "San Bernardino County, California" } },
+            { "@type": "City", "name": "Chino", "containedInPlace": { "@type": "AdministrativeArea", "name": "San Bernardino County, California" } },
+            { "@type": "City", "name": "Ontario", "containedInPlace": { "@type": "AdministrativeArea", "name": "San Bernardino County, California" } },
+            { "@type": "City", "name": "Rancho Cucamonga", "containedInPlace": { "@type": "AdministrativeArea", "name": "San Bernardino County, California" } },
+            { "@type": "City", "name": "Upland", "containedInPlace": { "@type": "AdministrativeArea", "name": "San Bernardino County, California" } },
+            { "@type": "City", "name": "Montclair", "containedInPlace": { "@type": "AdministrativeArea", "name": "San Bernardino County, California" } },
+            { "@type": "City", "name": "Fontana", "containedInPlace": { "@type": "AdministrativeArea", "name": "San Bernardino County, California" } },
+            { "@type": "City", "name": "San Bernardino", "containedInPlace": { "@type": "AdministrativeArea", "name": "San Bernardino County, California" } },
+            { "@type": "City", "name": "Riverside", "containedInPlace": { "@type": "AdministrativeArea", "name": "Riverside County, California" } },
+            { "@type": "City", "name": "Moreno Valley", "containedInPlace": { "@type": "AdministrativeArea", "name": "Riverside County, California" } },
+            { "@type": "City", "name": "Eastvale", "containedInPlace": { "@type": "AdministrativeArea", "name": "Riverside County, California" } },
+            { "@type": "City", "name": "Corona", "containedInPlace": { "@type": "AdministrativeArea", "name": "Riverside County, California" } },
+            { "@type": "City", "name": "Diamond Bar", "containedInPlace": { "@type": "AdministrativeArea", "name": "Los Angeles County, California" } },
+            { "@type": "City", "name": "Claremont", "containedInPlace": { "@type": "AdministrativeArea", "name": "Los Angeles County, California" } },
+            { "@type": "City", "name": "Pomona", "containedInPlace": { "@type": "AdministrativeArea", "name": "Los Angeles County, California" } },
+            { "@type": "AdministrativeArea", "name": "Inland Empire, California" }
+          ],
+          "knowsLanguage": ["en"],
+          "sameAs": [
+            "https://www.zillow.com/profile/sebastianstreetrlty",
+            "https://www.linkedin.com/in/sebastian-street-665259238/",
+            "https://www.facebook.com/sebastian.street.92798/",
+            "https://www.instagram.com/sebtherealtor_/"
+          ],
+          "employee": { "@id": "https://www.diamondstreetrealty.com/#sebastian-street" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://www.diamondstreetrealty.com/#sebastian-street",
+          "name": "Sebastian Street",
+          "givenName": "Sebastian",
+          "familyName": "Street",
+          "jobTitle": "REALTOR®",
+          "description": "Chino Hills and Inland Empire REALTOR® specializing in residential buying, selling and investment representation across San Bernardino, Riverside and Los Angeles counties. CA DRE #02208742. Approved originating partner for the CalHFA Dream For All down payment assistance program.",
+          "image": "https://www.diamondstreetrealty.com/images/sebastian-street.webp",
+          "url": "https://www.diamondstreetrealty.com/about",
+          "telephone": "+1-626-632-2559",
+          "email": "sebastian@diamondstreetrealty.com",
+          "knowsLanguage": ["en"],
+          "knowsAbout": [
+            "Chino Hills real estate",
+            "Inland Empire residential real estate",
+            "First-time home buyers",
+            "CalHFA Dream For All down payment assistance",
+            "Mello-Roos and Community Facilities District assessments",
+            "Home valuation and pricing strategy",
+            "Investment property acquisition",
+            "1031 exchange coordination"
+          ],
+          "hasCredential": [
+            {
+              "@type": "EducationalOccupationalCredential",
+              "credentialCategory": "Real Estate License",
+              "name": "California Real Estate Salesperson License",
+              "identifier": "CA DRE #02208742",
+              "recognizedBy": {
+                "@type": "GovernmentOrganization",
+                "name": "California Department of Real Estate",
+                "url": "https://www.dre.ca.gov/"
               }
             },
-            animation: {
-              marquee: 'marquee var(--duration, 30s) linear infinite',
-            },
-            keyframes: {
-              marquee: {
-                to: { transform: 'translateX(-50%)' }
+            {
+              "@type": "EducationalOccupationalCredential",
+              "credentialCategory": "Professional Membership",
+              "name": "REALTOR®",
+              "recognizedBy": {
+                "@type": "Organization",
+                "name": "National Association of REALTORS®",
+                "url": "https://www.nar.realtor/"
               }
             }
-          }
+          ],
+          "worksFor": {
+            "@type": "Organization",
+            "name": "eHomes | The Toro Group"
+          },
+          "areaServed": { "@type": "AdministrativeArea", "name": "Inland Empire, California" },
+          "sameAs": [
+            "https://www.zillow.com/profile/sebastianstreetrlty",
+            "https://www.linkedin.com/in/sebastian-street-665259238/",
+            "https://www.facebook.com/sebastian.street.92798/",
+            "https://www.instagram.com/sebtherealtor_/"
+          ]
         }
-      }
-    </script>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
-    "recharts": "https://aistudiocdn.com/recharts@^3.5.1"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+      ]
+    }
+  </script>
+  <!--app-head-->
 </head>
-  <body>
-    <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
+
+<body>
+  <div id="root"><!--app-html--></div>
+  <script type="module" src="/src/main.tsx"></script>
 </body>
+
 </html>

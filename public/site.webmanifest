@@ -1,0 +1,12 @@
+{
+  "name": "Sebastian Street, REALTOR®",
+  "short_name": "Sebastian Street",
+  "description": "Chino Hills & Inland Empire real estate — buy, sell, invest.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    { "src": "/images/sebastian-street.webp", "sizes": "240x240", "type": "image/webp" }
+  ]
+}
