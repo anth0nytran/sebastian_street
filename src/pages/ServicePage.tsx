@@ -14,7 +14,6 @@ import {
     PhotoBand,
     StatRow,
 } from "@/components/ui";
-import { Backdrop } from "@/components/Backdrop";
 import { cn } from "@/lib/utils";
 
 /**
@@ -81,15 +80,34 @@ export default function ServicePage({ slug }: { slug: ServiceDef["slug"] }) {
     );
 }
 
+/**
+ * One city per service, chosen for what the page is arguing. Selling leads with
+ * the hillside Chino Hills stock the listing copy is about; buying with Rancho
+ * Cucamonga's newer supply; investing with Fontana's logistics corridor.
+ */
+const SERVICE_HERO = {
+    sell: PHOTOS.chinoHills,
+    buy: PHOTOS.ranchoCucamonga,
+    invest: PHOTOS.fontana,
+} as const;
+
 /* -------------------------------------------------------------------- HERO */
 
 function ServiceHero({ service }: { service: ServiceDef }) {
     return (
-        <Backdrop
-            ghost={service.name.toUpperCase()}
-            className="flex min-h-[74svh] items-end pb-16 pt-40 md:pb-24"
-        >
-            <div className="canvas">
+        <section className="on-dark relative flex min-h-[74svh] items-end overflow-hidden bg-black pb-16 pt-40 md:pb-24">
+            <div className="absolute inset-0 z-0">
+                <img
+                    src={SERVICE_HERO[service.slug].src}
+                    alt={SERVICE_HERO[service.slug].alt}
+                    fetchPriority="high"
+                    decoding="sync"
+                    className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/78 to-black/52" />
+                <div className="absolute inset-0 bg-black/15" />
+            </div>
+            <div className="canvas relative z-10">
                 <Reveal y={16}>
                     <Eyebrow tone="dark" className="mb-6">
                         {service.eyebrow} · Chino Hills & the Inland Empire
@@ -119,7 +137,7 @@ function ServiceHero({ service }: { service: ServiceDef }) {
                     </div>
                 </Reveal>
             </div>
-        </Backdrop>
+        </section>
     );
 }
 
@@ -231,13 +249,13 @@ function ProofBand() {
                     </h2>
                     <p className="mb-9 max-w-xl text-body text-neutral-600 text-pretty">
                         Sebastian is licensed in California as REALTOR® DRE #{AGENT.dre} and works within{" "}
-                        {AGENT.brokerage} — a team carrying {STATS.teamReviewCount.toLocaleString()} verified
+                        {AGENT.brokerage} — a team carrying {STATS.brokerageReviewCount.toLocaleString()} verified
                         reviews and more than 25 years of leadership tenure. You get an individual agent's
                         attention with institutional marketing reach behind it.
                     </p>
                     <StatRow stats={STATS.team} />
                     <p className="mt-5 font-sans text-[0.625rem] uppercase tracking-[0.15em] text-neutral-400">
-                        Figures reflect brokerage team production, not individual production.
+                        Figures reflect eHomes brokerage-wide production, not individual production.
                     </p>
                 </Reveal>
 

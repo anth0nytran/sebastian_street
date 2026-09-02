@@ -18,7 +18,7 @@ export const AGENT = {
     firstName: "Sebastian",
     title: "REALTOR®",
     dre: "02208742",
-    brokerage: "eHomes | The Toro Group",
+    brokerage: "eHomes",
     tagline: "Buy. Sell. Invest.",
     phone: "(626) 632-2559",
     phoneHref: "tel:+16266322559",
@@ -90,6 +90,35 @@ export const PHOTOS = {
         src: "/images/chino-theatre.webp",
         alt: "The historic CHINO theatre marquee in downtown Chino, California",
     },
+    chinoHills: {
+        src: "/images/city-chino-hills.webp",
+        alt: "Aerial view over hillside homes in Chino Hills, California, with snow-capped mountains beyond",
+    },
+    riverside: {
+        src: "/images/city-riverside.webp",
+        alt: "Aerial view over downtown Riverside, California, with Box Springs Mountain beyond",
+    },
+    ranchoCucamonga: {
+        src: "/images/city-rancho-cucamonga.webp",
+        alt: "Victoria Gardens in Rancho Cucamonga, California, with the San Gabriel Mountains behind",
+    },
+    fontana: {
+        src: "/images/city-fontana.webp",
+        alt: "Aerial view of a retail centre in Fontana, California, at dusk with the foothills behind",
+    },
+    sanBernardino: {
+        src: "/images/city-san-bernardino.webp",
+        alt: "Wide aerial view over San Bernardino, California, with the San Bernardino Mountains beyond",
+    },
+    corona: {
+        src: "/images/city-corona.webp",
+        alt: "Hillside homes in Corona, California, below the Santa Ana Mountains",
+    },
+    /** Full-frame studio portrait, for the About hero. */
+    portrait: {
+        src: "/images/sebastian-street-portrait.webp",
+        alt: "Studio portrait of Sebastian Street, REALTOR®",
+    },
     riversideDowntown: {
         src: "/images/city-riverside.webp",
         alt: "Aerial view over downtown Riverside, California, with Box Springs Mountain beyond",
@@ -142,12 +171,12 @@ export const CREDENTIALS: Credential[] = [
     },
     {
         label: "Brokerage",
-        value: "eHomes | The Toro Group",
-        detail: "Full-service Inland Empire brokerage",
+        value: "eHomes",
+        detail: "Full-service Southern California brokerage",
     },
     {
         label: "Zillow Premier Agent",
-        value: "5.0★ · 3,233 team reviews",
+        value: "5.0★ · 3,233 brokerage reviews",
         detail: "Verified transaction reviews",
         href: LINKS.zillow,
     },
@@ -158,9 +187,9 @@ export const CREDENTIALS: Credential[] = [
         href: LINKS.calhfa,
     },
     {
-        label: "Team Experience",
+        label: "Brokerage Experience",
         value: "25+ years",
-        detail: "The Toro Group leadership tenure",
+        detail: "eHomes brokerage tenure",
     },
     {
         label: "Tri-County Coverage",
@@ -176,15 +205,15 @@ export const CREDENTIALS: Credential[] = [
  */
 export const STATS = {
     team: [
-        { value: "5,091", label: "Total Team Sales" },
-        { value: "418", label: "Sales, Last 12 Months" },
+        { value: "5,091", label: "Brokerage Sales, Total" },
+        { value: "418", label: "Brokerage Sales, 12 Mo." },
         { value: "$695K", label: "Average Sale Price" },
         { value: "$10K–$8.5M", label: "Price Range Served" },
     ],
     /** Sebastian's own verified reviews — this is what aggregateRating uses. */
     reviewCount: 11,
-    /** The team's Zillow total. Always labelled as team, never as his own. */
-    teamReviewCount: 3233,
+    /** The brokerage-wide Zillow total. Always labelled as such, never as his own. */
+    brokerageReviewCount: 3233,
     rating: "5.0",
 } as const;
 

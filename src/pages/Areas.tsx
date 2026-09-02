@@ -87,7 +87,7 @@ export default function Areas() {
             {/* Featured markets — each has a dedicated, indexable landing page. */}
             <SectionHead
                 eyebrow="Core Markets"
-                title="Where We Work Most"
+                title="Areas Serviced Most"
                 aside={
                     <p className="max-w-xs font-sans text-body-sm text-neutral-500">
                         Eight cities with dedicated market coverage. Each one has its own submarkets, school

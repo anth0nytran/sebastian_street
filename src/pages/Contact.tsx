@@ -1,11 +1,10 @@
 import { useSearchParams } from "react-router-dom";
 import { Phone, Mail, MapPin, Clock, Star } from "lucide-react";
 import SEO, { AGENT_ID } from "@/hooks/useSEO";
-import { AGENT, OFFICE, LINKS, STATS, SITE_URL } from "@/data/site";
+import { AGENT, OFFICE, LINKS, STATS, SITE_URL, PHOTOS } from "@/data/site";
 import LeadForm from "@/components/LeadForm";
 import type { LeadInterest } from "@/types";
 import { Reveal, Eyebrow, ActionAnchor, FaqSection } from "@/components/ui";
-import { Backdrop } from "@/components/Backdrop";
 
 /** ?intent= arrives from every service CTA so the form opens pre-scoped. */
 const INTENT_MAP: Record<string, { interest: LeadInterest; title: string; subtitle: string }> = {
@@ -85,8 +84,20 @@ export default function Contact() {
             />
 
             {/* ------------------------------------------------------- HERO */}
-            <Backdrop ghost="@" className="pb-section-sm pt-36">
-                <div className="canvas">
+            <section className="on-dark relative pb-section-sm pt-36 overflow-hidden bg-black">
+            <div className="absolute inset-0 z-0">
+                <img
+                    src={PHOTOS.riverside.src}
+                    alt={PHOTOS.riverside.alt}
+                    fetchPriority="high"
+                    decoding="sync"
+                    style={{ objectPosition: "50% 50%" }}
+                    className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/82 to-black/62" />
+                <div className="absolute inset-0 bg-black/20" />
+            </div>
+            <div className="canvas relative z-10">
                     <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
                         {/* Left: NAP + trust. This block is byte-identical to the
                             LocalBusiness schema — matching NAP across the site,
@@ -176,7 +187,7 @@ export default function Contact() {
                         </Reveal>
                     </div>
                 </div>
-            </Backdrop>
+            </section>
 
             {/* -------------------------------------------------------- FAQ */}
             <FaqSection

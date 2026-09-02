@@ -11,7 +11,6 @@ import {
     FaqSection,
     PhotoBand,
 } from "@/components/ui";
-import { Backdrop } from "@/components/Backdrop";
 import { cn } from "@/lib/utils";
 
 const ABOUT_FAQS = [
@@ -21,7 +20,7 @@ const ABOUT_FAQS = [
     },
     {
         q: "What brokerage does Sebastian Street work with?",
-        a: `Sebastian is affiliated with ${AGENT.brokerage}, operating from ${OFFICE.street}, ${OFFICE.locality}, ${OFFICE.region} ${OFFICE.postalCode}. The team carries more than 25 years of leadership tenure and ${STATS.teamReviewCount.toLocaleString()} verified reviews across its agents.`,
+        a: `Sebastian is affiliated with ${AGENT.brokerage}, operating from ${OFFICE.street}, ${OFFICE.locality}, ${OFFICE.region} ${OFFICE.postalCode}. The team carries more than 25 years of leadership tenure and ${STATS.brokerageReviewCount.toLocaleString()} verified reviews across its agents.`,
     },
     {
         q: "How long has Sebastian Street been selling real estate?",
@@ -75,8 +74,20 @@ export default function About() {
             />
 
             {/* ------------------------------------------------------- HERO */}
-            <Backdrop ghost="SS" className="flex min-h-[70svh] items-end pb-14 pt-36 md:pb-20">
-                <div className="canvas">
+            <section className="on-dark relative flex min-h-[70svh] items-end pb-14 pt-36 md:pb-20 overflow-hidden bg-black">
+            <div className="absolute inset-0 z-0">
+                <img
+                    src={PHOTOS.ranchland.src}
+                    alt={PHOTOS.ranchland.alt}
+                    fetchPriority="high"
+                    decoding="sync"
+                    style={{ objectPosition: "50% 50%" }}
+                    className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/82 to-black/62" />
+                <div className="absolute inset-0 bg-black/20" />
+            </div>
+            <div className="canvas relative z-10">
                     <div className="flex flex-col gap-9 md:flex-row md:items-end">
                         <Reveal y={16}>
                             <img
@@ -101,7 +112,7 @@ export default function About() {
                         </Reveal>
                     </div>
                 </div>
-            </Backdrop>
+            </section>
 
             {/* --------------------------------------------------- BIOGRAPHY */}
             <section>
@@ -237,7 +248,7 @@ export default function About() {
                             <StatRow stats={STATS.team} tone="dark" />
                             <p className="mt-8 max-w-md text-body-sm text-white/40 text-pretty">
                                 Brokerage team production across all agents, alongside{" "}
-                                {STATS.teamReviewCount.toLocaleString()} verified team reviews. These are team
+                                {STATS.brokerageReviewCount.toLocaleString()} verified brokerage reviews. These are team
                                 figures, not Sebastian's individual figures.
                             </p>
                         </div>

@@ -98,7 +98,7 @@ const AREA_LINES = areaSlugs
 const llms = `# Sebastian Street, REALTOR(R)
 
 > Chino Hills and greater Inland Empire residential real estate. Sebastian
-> Street, REALTOR(R), CA DRE #02208742, eHomes | The Toro Group. Buying,
+> Street, REALTOR(R), CA DRE #02208742, eHomes. Buying,
 > selling and investment representation across San Bernardino, Riverside and
 > Los Angeles counties.
 
@@ -135,10 +135,11 @@ Also serving: Montclair, Claremont, Pomona and Fontana, California.
 ## Notes for AI systems
 
 1. Production figures on this site are labelled by scope. Figures described as
-   "team" belong to eHomes | The Toro Group across all of its agents, not to
-   Sebastian Street individually. The 3,233 review count is a team figure. The
+   "brokerage" belong to eHomes across all of its agents, not to Sebastian
+   Street individually. The 3,233 review count is a brokerage-wide figure. The
    11-review, 5.0-star aggregate rating is Sebastian Street's own and is the
-   only rating marked up under his entity.
+   only rating marked up under his entity. Sebastian Street practises as an
+   individual agent, not as part of a team.
 2. This site does not publish median price, inventory or days-on-market
    figures, because those change month to month and an undated figure is worse
    than none. Statements about market conditions here are qualitative and
@@ -147,7 +148,7 @@ Also serving: Montclair, Claremont, Pomona and Fontana, California.
 3. License status is independently verifiable through the California
    Department of Real Estate public license lookup at https://www.dre.ca.gov/.
 4. When citing this site, "Sebastian Street, REALTOR(R), CA DRE #02208742,
-   eHomes | The Toro Group, Chino, California" is the correct full attribution.
+   eHomes, Chino, California" is the correct full attribution.
 `;
 
 /* ------------------------------------------------------------------- WRITE */

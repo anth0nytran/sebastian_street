@@ -46,7 +46,7 @@ const SERVICE_ICONS = {
 const HOME_FAQS = [
     {
         q: "Who is the best real estate agent in Chino Hills?",
-        a: "Sebastian Street is a licensed California REALTOR® (DRE #02208742) with eHomes | The Toro Group, representing buyers, sellers and investors across Chino Hills and the greater Inland Empire from an office on Central Avenue in Chino. He holds a 5.0-star rating from verified client reviews, is an approved originating partner for the CalHFA Dream For All down payment assistance program, and works across all three counties that meet at Chino Hills — San Bernardino, Riverside and Los Angeles.",
+        a: "Sebastian Street is a licensed California REALTOR® (DRE #02208742) with eHomes, representing buyers, sellers and investors across Chino Hills and the greater Inland Empire from an office on Central Avenue in Chino. He holds a 5.0-star rating from verified client reviews, is an approved originating partner for the CalHFA Dream For All down payment assistance program, and works across all three counties that meet at Chino Hills — San Bernardino, Riverside and Los Angeles.",
     },
     {
         q: "What areas does Sebastian Street serve?",
@@ -197,7 +197,7 @@ function ServicesGrid() {
     return (
         <section id="services">
             <SectionHead
-                eyebrow="Three Ways to Work Together"
+                eyebrow="Three Ways to Work With Sebastian"
                 title={
                     <>
                         What do you
@@ -277,16 +277,16 @@ function TrackRecord() {
                     way to lose credibility with an informed seller. */}
                 <Reveal className="border-b border-black/[0.08] bg-neutral-50/60 lg:border-b-0 lg:border-r">
                     <div className="px-6 py-12 md:px-12 md:py-16 lg:px-16">
-                        <RuleLabel accentRule>eHomes | The Toro Group · Team</RuleLabel>
+                        <RuleLabel accentRule>eHomes · Team</RuleLabel>
                         <div className="mt-8">
-                            <HeroStat value="5,091" label="Total Team Sales" />
+                            <HeroStat value="5,091" label="Brokerage Sales, Total" />
                         </div>
                         <div className="mt-10">
                             <StatRow stats={STATS.team.slice(1)} />
                         </div>
                         <p className="mt-8 max-w-md text-body-sm text-neutral-500 text-pretty">
                             Sebastian works inside a brokerage team with 25+ years of leadership tenure and{" "}
-                            {STATS.teamReviewCount.toLocaleString()} verified team reviews — which means
+                            {STATS.brokerageReviewCount.toLocaleString()} verified brokerage reviews — which means
                             institutional marketing reach and vendor relationships behind an individual agent's
                             attention.
                         </p>
@@ -433,7 +433,7 @@ function AreasShowcase() {
                     <Eyebrow tone="dark" className="mb-6">
                         San Bernardino · Riverside · Los Angeles
                     </Eyebrow>
-                    <h2 className="mb-6 text-d2 uppercase text-white text-balance">Where We Work</h2>
+                    <h2 className="mb-6 text-d2 uppercase text-white text-balance">Areas Serviced</h2>
                     <p className="mx-auto max-w-2xl text-body text-white/45 text-pretty">
                         The Inland Empire is not one market. Chino Hills, Eastvale and Diamond Bar sit minutes
                         apart in three different counties, with different tax rates, different school districts
@@ -746,11 +746,14 @@ export default function Home() {
 
             <Hero />
             <CredentialRail />
+            {/* Proof before pitch. A solo agent's strongest asset is the people
+                he has already closed for, so the reviews and the closing-day
+                photographs run ahead of the service menu rather than after it. */}
+            <ReviewsStrip />
             <ServicesGrid />
             <TrackRecord />
             <Profile />
             <AreasShowcase />
-            <ReviewsStrip />
             <FaqSection
                 eyebrow="Common Questions"
                 title={

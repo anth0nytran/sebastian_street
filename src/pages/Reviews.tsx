@@ -4,7 +4,6 @@ import { STATS, AGENT, LINKS, SITE_URL, PHOTOS, CLIENT_PHOTOS } from "@/data/sit
 import reviewsData from "@/data/reviews.json";
 import type { Review } from "@/types";
 import { Reveal, Eyebrow, SectionHead, ActionLink, ActionAnchor, PhotoBand } from "@/components/ui";
-import { Backdrop } from "@/components/Backdrop";
 import { cn } from "@/lib/utils";
 
 const REVIEWS = reviewsData as Review[];
@@ -58,8 +57,20 @@ export default function Reviews() {
             />
 
             {/* ------------------------------------------------------- HERO */}
-            <Backdrop ghost="5.0" className="flex min-h-[58svh] items-end pb-14 pt-36 md:pb-20">
-                <div className="canvas">
+            <section className="on-dark relative flex min-h-[58svh] items-end pb-14 pt-36 md:pb-20 overflow-hidden bg-black">
+            <div className="absolute inset-0 z-0">
+                <img
+                    src={PHOTOS.corona.src}
+                    alt={PHOTOS.corona.alt}
+                    fetchPriority="high"
+                    decoding="sync"
+                    style={{ objectPosition: "50% 50%" }}
+                    className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/82 to-black/62" />
+                <div className="absolute inset-0 bg-black/20" />
+            </div>
+            <div className="canvas relative z-10">
                     <Reveal y={16}>
                         <Eyebrow tone="dark" className="mb-6">
                             Verified Client Reviews
@@ -97,7 +108,7 @@ export default function Reviews() {
                         </div>
                     </Reveal>
                 </div>
-            </Backdrop>
+            </section>
 
             {/* ------------------------------------------------- TEAM NOTE
                 Stated in prose, not marked up as his reviews. */}
@@ -106,7 +117,7 @@ export default function Reviews() {
                     <p className="max-w-4xl text-body-sm text-neutral-500 text-pretty">
                         The {STATS.reviewCount} reviews below are {AGENT.firstName}'s own, from clients he
                         personally represented. Separately, {AGENT.brokerage} carries{" "}
-                        {STATS.teamReviewCount.toLocaleString()} verified reviews across the full team — a team
+                        {STATS.brokerageReviewCount.toLocaleString()} verified reviews across the full team — a team
                         figure, listed here for context rather than presented as individual production.
                     </p>
                 </div>
