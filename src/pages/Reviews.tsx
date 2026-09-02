@@ -12,10 +12,11 @@ export default function Reviews() {
     /**
      * Review schema is emitted for Sebastian's own verified reviews only.
      *
-     * The brokerage team's 3,233 Zillow reviews are real, but they are not his
-     * reviews — marking them up under his entity would be a misrepresentation
-     * that Google treats as a structured-data violation. The team number is
-     * still stated on the page, in words, labelled as a team figure.
+     * Only reviews Sebastian personally earned are marked up here, and they are
+     * the only reviews the site claims anywhere. Company-wide review totals used
+     * to appear on this page as context; they were removed, because a reader
+     * scanning the page attributes any number next to an agent's name to that
+     * agent no matter how it is labelled.
      */
     const reviewNodes = REVIEWS.map((review, i) => ({
         "@type": "Review",
@@ -110,15 +111,15 @@ export default function Reviews() {
                 </div>
             </section>
 
-            {/* ------------------------------------------------- TEAM NOTE
-                Stated in prose, not marked up as his reviews. */}
+            {/* --------------------------------------------------- SCOPE NOTE
+                Says plainly what the eleven reviews are, so the modest count
+                reads as completeness rather than as a partial sample. */}
             <div className="border-b border-black/[0.08] bg-neutral-50">
                 <div className="canvas py-6">
                     <p className="max-w-4xl text-body-sm text-neutral-500 text-pretty">
-                        The {STATS.reviewCount} reviews below are {AGENT.firstName}'s own, from clients he
-                        personally represented. Separately, {AGENT.brokerage} carries{" "}
-                        {STATS.brokerageReviewCount.toLocaleString()} verified reviews across the full team — a team
-                        figure, listed here for context rather than presented as individual production.
+                        These are every review {AGENT.firstName} has, from clients he personally represented —
+                        not a selection of the good ones. Each is published on his Zillow profile, tied to a
+                        closed transaction, and reproduced here unedited.
                     </p>
                 </div>
             </div>

@@ -272,28 +272,29 @@ function TrackRecord() {
             />
 
             <div className="mx-auto grid max-w-canvas grid-cols-1 lg:grid-cols-2">
-                {/* Team production. Labelled as team everywhere it appears —
-                    presenting brokerage volume as personal volume is the fastest
-                    way to lose credibility with an informed seller. */}
+                {/* Everything in this column is his. There is no brokerage
+                    column any more: quoting a company's volume next to an
+                    agent's name reads as production the reader will attribute
+                    to him, and it stops being true the day he moves firms. */}
                 <Reveal className="border-b border-black/[0.08] bg-neutral-50/60 lg:border-b-0 lg:border-r">
                     <div className="px-6 py-12 md:px-12 md:py-16 lg:px-16">
-                        <RuleLabel accentRule>eHomes · Team</RuleLabel>
+                        <RuleLabel accentRule>Every Figure His Own</RuleLabel>
                         <div className="mt-8">
-                            <HeroStat value="5,091" label="Brokerage Sales, Total" />
+                            <HeroStat value={STATS.rating} label="Average Rating, Every Review" />
                         </div>
                         <div className="mt-10">
-                            <StatRow stats={STATS.team.slice(1)} />
+                            <StatRow stats={STATS.own.filter((s) => s.label !== "Average Rating")} />
                         </div>
                         <p className="mt-8 max-w-md text-body-sm text-neutral-500 text-pretty">
-                            Sebastian works inside a brokerage team with 25+ years of leadership tenure and{" "}
-                            {STATS.brokerageReviewCount.toLocaleString()} verified brokerage reviews — which means
-                            institutional marketing reach and vendor relationships behind an individual agent's
-                            attention.
+                            Not the biggest number on any agent's website — it is the number of people who
+                            have actually worked with Sebastian, and every one of them left five stars. A
+                            brokerage's company-wide volume would look more impressive here. It would also
+                            not be his.
                         </p>
                     </div>
                 </Reveal>
 
-                {/* Sebastian's own closings. Smaller number, stated plainly. */}
+                {/* Sebastian's own closings, stated plainly. */}
                 <Reveal delay={0.1} className="flex flex-col">
                     <div className="px-6 pb-7 pt-12 md:px-12 md:pt-16 lg:px-16">
                         <RuleLabel>{AGENT.name} · Personally Represented</RuleLabel>
@@ -332,7 +333,7 @@ function TrackRecord() {
                                         <MapPin className="h-3 w-3 text-neutral-400" /> {sale.city}
                                     </span>
                                     <span className="mt-0.5 font-sans text-[0.5625rem] uppercase tracking-wider text-neutral-400">
-                                        {sale.when}
+                                        CA {sale.zip}
                                     </span>
                                 </div>
                             </div>

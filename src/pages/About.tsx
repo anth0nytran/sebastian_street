@@ -1,6 +1,6 @@
 import { ExternalLink } from "lucide-react";
 import SEO, { PERSON_ID, AGENT_ID } from "@/hooks/useSEO";
-import { AGENT, OFFICE, CREDENTIALS, STATS, SALES, LINKS, SITE_URL, FEATURED_AREAS, PHOTOS } from "@/data/site";
+import { AGENT, OFFICE, CREDENTIALS, STATS, SALES, LINKS, SITE_URL, FEATURED_AREAS, PHOTOS, SOCIAL_LINKS } from "@/data/site";
 import {
     Reveal,
     Eyebrow,
@@ -20,11 +20,11 @@ const ABOUT_FAQS = [
     },
     {
         q: "What brokerage does Sebastian Street work with?",
-        a: `Sebastian is affiliated with ${AGENT.brokerage}, operating from ${OFFICE.street}, ${OFFICE.locality}, ${OFFICE.region} ${OFFICE.postalCode}. The team carries more than 25 years of leadership tenure and ${STATS.brokerageReviewCount.toLocaleString()} verified reviews across its agents.`,
+        a: `Sebastian is affiliated with ${AGENT.brokerage}, operating from ${OFFICE.street}, ${OFFICE.locality}, ${OFFICE.region} ${OFFICE.postalCode}. He practises as an individual agent under that brokerage rather than as part of a team, so every client he takes on is worked by him directly.`,
     },
     {
         q: "How long has Sebastian Street been selling real estate?",
-        a: "Sebastian has been actively representing buyers, sellers and investors in Southern California, with a practice centered on Chino Hills and the greater Inland Empire. He works inside a brokerage team whose leadership carries over 25 years of tenure, which is why brokerage-level production figures shown on this site are labelled as team figures rather than presented as individual production.",
+        a: "Sebastian actively represents buyers, sellers and investors across Southern California, with a practice centered on Chino Hills and the greater Inland Empire. He works as a solo agent under eHomes. Every production figure published on this site is his own and is verifiable — the closed transactions listed here, and the eleven five-star reviews on his Zillow profile. No brokerage-wide or team figure appears anywhere on this site.",
     },
     {
         q: "What makes Sebastian different from other Inland Empire agents?",
@@ -121,13 +121,7 @@ export default function About() {
                     title="Why This Practice Looks Like This"
                     aside={
                         <div className="flex flex-wrap gap-4 md:justify-end">
-                            {(
-                                [
-                                    ["Zillow", LINKS.zillow],
-                                    ["LinkedIn", LINKS.linkedin],
-                                    ["Instagram", LINKS.instagram],
-                                ] as const
-                            ).map(([label, href]) => (
+                            {SOCIAL_LINKS.map(({ label, href }) => (
                                 <a
                                     key={label}
                                     href={href}
@@ -169,11 +163,13 @@ export default function About() {
                                 than the seller's current one.
                             </p>
                             <p className="text-body text-neutral-600 text-pretty">
-                                Sebastian is affiliated with {AGENT.brokerage}, which gives an individual agent's
-                                attention institutional marketing reach and vendor relationships behind it. Where
-                                team production figures appear on this site, they are labelled as team figures —
-                                presenting brokerage volume as personal volume is the fastest way to lose an
-                                informed client's trust, and it isn't worth the headline.
+                                Sebastian is affiliated with {AGENT.brokerage}, which gives him brokerage
+                                marketing reach and vendor relationships to draw on. He practises solo under
+                                it: no team, no handoff, and no company-wide production figures anywhere on
+                                this site. Every number published here is a transaction he closed or a review
+                                a client of his wrote — presenting brokerage volume as personal volume is the
+                                fastest way to lose an informed client's trust, and it isn't worth the
+                                headline.
                             </p>
                             <p className="text-body font-semibold text-black text-pretty">
                                 If your situation falls outside this footprint, you'll get an honest referral
@@ -230,8 +226,8 @@ export default function About() {
                     tone="dark"
                     aside={
                         <p className="max-w-xs font-sans text-body-sm text-white/45">
-                            Team production and individual production are two different things. Both are shown
-                            here, each named for what it is.
+                            Every figure below is Sebastian's own. Nothing here belongs to a brokerage, a
+                            team, or anyone else's production.
                         </p>
                     }
                 />
@@ -242,14 +238,14 @@ export default function About() {
                             <span className="mb-8 flex items-center gap-3">
                                 <span className="h-[2px] w-6 bg-accent" />
                                 <span className="font-sans text-eyebrow uppercase text-white/60">
-                                    {AGENT.brokerage} · Team
+                                    {AGENT.name} · Verified Record
                                 </span>
                             </span>
-                            <StatRow stats={STATS.team} tone="dark" />
+                            <StatRow stats={STATS.own} tone="dark" />
                             <p className="mt-8 max-w-md text-body-sm text-white/40 text-pretty">
-                                Brokerage team production across all agents, alongside{" "}
-                                {STATS.brokerageReviewCount.toLocaleString()} verified brokerage reviews. These are team
-                                figures, not Sebastian's individual figures.
+                                Reviews and ratings come from his Zillow profile, where each one is tied to a
+                                transaction he closed. The closings and price range come from the transaction
+                                list beside this one. Nothing is rounded up and nothing is borrowed.
                             </p>
                         </div>
                     </Reveal>

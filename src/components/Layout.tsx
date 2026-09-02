@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { X, ArrowRight, Phone, Mail, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { AGENT, OFFICE, LINKS, NAV, FEATURED_AREAS } from "@/data/site";
+import { AGENT, OFFICE, NAV, FEATURED_AREAS, SOCIAL_LINKS } from "@/data/site";
 import { EASE } from "./ui";
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -394,14 +394,7 @@ function Footer() {
                             </div>
 
                             <div className="mt-6 flex flex-wrap gap-4 border-t border-white/10 pt-5">
-                                {(
-                                    [
-                                        ["Zillow", LINKS.zillow],
-                                        ["Instagram", LINKS.instagram],
-                                        ["LinkedIn", LINKS.linkedin],
-                                        ["Facebook", LINKS.facebook],
-                                    ] as const
-                                ).map(([label, href]) => (
+                                {SOCIAL_LINKS.map(({ label, href }) => (
                                     <a
                                         key={label}
                                         href={href}

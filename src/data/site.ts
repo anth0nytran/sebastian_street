@@ -48,13 +48,38 @@ export const PRIMARY_MARKET = {
 
 export const LINKS = {
     zillow: "https://www.zillow.com/profile/sebastianstreetrlty",
-    instagram: "https://www.instagram.com/sebtherealtor_/",
-    linkedin: "https://www.linkedin.com/in/sebastian-street-665259238/",
+    instagram: "https://www.instagram.com/sebastian_street_chinorealtor/",
+    youtube: "https://www.youtube.com/@SebastianStreetChinoRealtor",
+    tiktok: "https://www.tiktok.com/@sebtherealtor",
     facebook: "https://www.facebook.com/sebastian.street.92798/",
+    x: "https://x.com/ChinorealtorSeb",
+    linkedin: "https://www.linkedin.com/in/sebastian-street-665259238/",
     bookCall: "https://calendly.com/sebastian-diamondstreetrealty/new-meeting",
     calhfa: "https://ehomesteam.hifello.com/p/sebastian-street/69725caeffc24c58215993e6",
     calhfaOfficial: "https://www.calhfa.ca.gov/dream/",
 } as const;
+
+/**
+ * Every public profile that belongs to Sebastian, ordered by how much weight it
+ * carries as an identity signal. SOCIAL_LINKS is what the UI renders and
+ * SOCIAL_PROFILES is the URL-only projection that feeds schema.org `sameAs` on
+ * both the Person and the LocalBusiness node.
+ *
+ * They are derived from one list on purpose: an entity graph is only as strong
+ * as the corroborating profiles it points at, and the failure mode is a profile
+ * that gets added to the footer and silently never reaches the graph.
+ */
+export const SOCIAL_LINKS = [
+    { label: "Zillow", href: LINKS.zillow },
+    { label: "Instagram", href: LINKS.instagram },
+    { label: "YouTube", href: LINKS.youtube },
+    { label: "TikTok", href: LINKS.tiktok },
+    { label: "Facebook", href: LINKS.facebook },
+    { label: "X", href: LINKS.x },
+    { label: "LinkedIn", href: LINKS.linkedin },
+] as const;
+
+export const SOCIAL_PROFILES: readonly string[] = SOCIAL_LINKS.map((s) => s.href);
 
 /* ------------------------------------------------------------- IMAGERY */
 
@@ -175,9 +200,9 @@ export const CREDENTIALS: Credential[] = [
         detail: "Full-service Southern California brokerage",
     },
     {
-        label: "Zillow Premier Agent",
-        value: "5.0★ · 3,233 brokerage reviews",
-        detail: "Verified transaction reviews",
+        label: "Zillow Reviews",
+        value: "5.0 stars across 11 reviews",
+        detail: "Every review from a client he represented",
         href: LINKS.zillow,
     },
     {
@@ -187,9 +212,9 @@ export const CREDENTIALS: Credential[] = [
         href: LINKS.calhfa,
     },
     {
-        label: "Brokerage Experience",
-        value: "25+ years",
-        detail: "eHomes brokerage tenure",
+        label: "Representation",
+        value: "Buyers & Sellers",
+        detail: "Purchase-side and listing-side transactions",
     },
     {
         label: "Tri-County Coverage",
@@ -203,17 +228,27 @@ export const CREDENTIALS: Credential[] = [
  * production is the most common credibility failure on agent sites, and an AI
  * answer engine that catches it will not cite the site again. Label it.
  */
+/**
+ * Every number here is Sebastian's own and independently checkable -- his Zillow
+ * profile for the reviews, SALES below for the closings and the price range.
+ *
+ * There is deliberately no brokerage-wide figure in this object. Borrowed
+ * production numbers are the quietest way an individual agent's site becomes
+ * false: the moment he changes brokerage, a five-figure sales count that was
+ * never his is advertising someone else's business under his name. If eHomes
+ * publishes verified company-wide figures later they belong in a separate
+ * BROKERAGE_STATS export, so that nothing can render them under his entity by
+ * accident.
+ */
 export const STATS = {
-    team: [
-        { value: "5,091", label: "Brokerage Sales, Total" },
-        { value: "418", label: "Brokerage Sales, 12 Mo." },
-        { value: "$695K", label: "Average Sale Price" },
-        { value: "$10K–$8.5M", label: "Price Range Served" },
+    own: [
+        { value: "11", label: "Five-Star Reviews" },
+        { value: "5.0", label: "Average Rating" },
+        { value: "7", label: "Closings Represented" },
+        { value: "$245K–$865K", label: "Closed Price Range" },
     ],
-    /** Sebastian's own verified reviews — this is what aggregateRating uses. */
+    /** Sebastian's own verified reviews -- this is what aggregateRating uses. */
     reviewCount: 11,
-    /** The brokerage-wide Zillow total. Always labelled as such, never as his own. */
-    brokerageReviewCount: 3233,
     rating: "5.0",
 } as const;
 

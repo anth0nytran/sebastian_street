@@ -245,17 +245,17 @@ function ProofBand() {
                 <Reveal>
                     <Eyebrow className="mb-4">Behind the Representation</Eyebrow>
                     <h2 className="mb-6 max-w-[18ch] text-d3 uppercase text-black text-balance">
-                        An individual agent, a brokerage team behind him
+                        One agent, and the record to check him on
                     </h2>
                     <p className="mb-9 max-w-xl text-body text-neutral-600 text-pretty">
-                        Sebastian is licensed in California as REALTOR® DRE #{AGENT.dre} and works within{" "}
-                        {AGENT.brokerage} — a team carrying {STATS.brokerageReviewCount.toLocaleString()} verified
-                        reviews and more than 25 years of leadership tenure. You get an individual agent's
-                        attention with institutional marketing reach behind it.
+                        Sebastian is licensed in California as REALTOR® DRE #{AGENT.dre} and practises under{" "}
+                        {AGENT.brokerage} as an individual agent — not as part of a team, and not handing your
+                        file to an assistant after the first meeting. The numbers below are his, and each one
+                        can be checked against his Zillow profile or the transaction list on his About page.
                     </p>
-                    <StatRow stats={STATS.team} />
+                    <StatRow stats={STATS.own} />
                     <p className="mt-5 font-sans text-[0.625rem] uppercase tracking-[0.15em] text-neutral-400">
-                        Figures reflect eHomes brokerage-wide production, not individual production.
+                        Sebastian's own production. No brokerage-wide figures appear on this site.
                     </p>
                 </Reveal>
 

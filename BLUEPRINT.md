@@ -220,12 +220,24 @@ These are non-negotiable, and the build enforces the first one:
    engine that can't corroborate it in the copy. The accordion animates height
    and never unmounts answers; `scripts/prerender.mjs` fails the build if any
    `FAQPage` answer is missing from the rendered HTML.
-2. **Never mark up borrowed proof as your own.** Sebastian's brokerage has
-   3,233 team reviews; he has 11. `aggregateRating` carries **11**. The team
-   figure appears in prose, labelled as a team figure. Conflating them is the
-   fastest way to lose both a rich result and a client's trust.
-3. **Label every statistic's scope.** `STATS.team` is named `team` so it can't
-   accidentally be presented as individual production.
+2. **Never publish borrowed proof, labelled or not.** This site originally
+   carried the brokerage's company-wide figures (5,091 sales, 3,233 reviews)
+   next to Sebastian's own 11 reviews, each block carefully captioned as a team
+   figure. That was the wrong call twice over. A reader scanning a page
+   attributes any number sitting beside an agent's name to that agent no matter
+   what the caption says — and the moment he changed brokerage, the figures were
+   advertising a firm he had left. They are gone. `STATS.own` holds only figures
+   that are his and independently checkable.
+
+   If a client genuinely wants brokerage figures on the page, put them in a
+   separate `BROKERAGE_STATS` export, never in `STATS`, so no component can
+   render them under the agent's entity by accident. `aggregateRating` carries
+   the agent's own review count and nothing else, always.
+3. **Give every derived list one source.** `SOCIAL_LINKS` is what the footer
+   renders; `SOCIAL_PROFILES` is the URL-only projection feeding schema.org
+   `sameAs`. Deriving one from the other means a profile can't be added to the
+   UI and silently miss the entity graph — which is the failure that makes an
+   entity graph weaker than the sum of its parts.
 4. **Don't publish undated market figures.** Median price and days-on-market
    change monthly; an undated number is worse than none. Keep claims structural
    (county lines, school districts, Mello-Roos) — those are stable facts.
