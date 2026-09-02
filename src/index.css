@@ -1,0 +1,166 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===========================================================================
+   TOKENS
+   Light is the only real theme. The "dark" sections of this site are not a
+   theme switch — they're black bands inside a white document, painted with
+   explicit black/white utilities. Keeping one token set avoids the class of
+   bug where a section half-inherits a palette it was never designed for.
+   ========================================================================= */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 0%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --destructive: 0 72% 42%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 0%;
+
+    /* Sharp corners. The system's defining decision — do not raise this. */
+    --radius: 0rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+
+  /* Square focus ring, matched to the system. Visible on both grounds:
+     black outline with a white halo so it survives on dark bands too. */
+  :focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.9);
+  }
+
+  .on-dark :focus-visible,
+  .bg-black :focus-visible {
+    outline-color: #fff;
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.9);
+  }
+
+  /* Respect the OS motion preference. Framer Motion reads this via
+     useReducedMotion(); this block covers the pure-CSS animations. */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ===========================================================================
+   COMPONENT PRIMITIVES
+   Four classes carry ~80% of the visual identity. Reach for these before
+   writing a new arrangement of utilities.
+   ========================================================================= */
+@layer components {
+  /* The micro-caps eyebrow that opens nearly every block. */
+  .eyebrow {
+    @apply inline-block font-sans text-eyebrow uppercase text-accent-deep;
+  }
+  .on-dark .eyebrow,
+  .eyebrow-on-dark {
+    @apply text-accent;
+  }
+
+  /* Rule + label pairing used above stat blocks and column heads. */
+  .rule-label {
+    @apply flex items-center gap-3;
+  }
+  .rule-label::before {
+    content: "";
+    @apply block h-[2px] w-6 bg-current flex-shrink-0;
+  }
+
+  /* Primary action. Square, heavy, letterspaced — reads as a stamp. */
+  .btn {
+    @apply inline-flex items-center justify-center gap-3 px-8 py-5
+           font-sans text-[0.6875rem] font-black uppercase tracking-[0.2em]
+           transition-all duration-300 ease-editorial;
+  }
+  .btn-primary {
+    @apply btn bg-black text-white hover:bg-accent hover:text-accent-foreground;
+  }
+  .btn-invert {
+    @apply btn bg-white text-black hover:bg-accent hover:text-accent-foreground;
+  }
+  .btn-outline {
+    @apply btn border border-black/20 text-black hover:border-black hover:bg-black hover:text-white;
+  }
+  .btn-outline-invert {
+    @apply btn border border-white/30 text-white backdrop-blur-sm hover:border-white hover:bg-white hover:text-black;
+  }
+
+  /* The hairline that builds the editorial grid. Never a shadow, never a
+     rounded card — the structure is drawn with 1px rules. */
+  .hairline {
+    @apply border-black/[0.08];
+  }
+  .hairline-invert {
+    @apply border-white/10;
+  }
+
+  /* Standard page gutter + canvas cap. */
+  .canvas {
+    @apply mx-auto w-full max-w-canvas px-6 md:px-12 lg:px-16;
+  }
+}
+
+/* ===========================================================================
+   UTILITIES
+   ========================================================================= */
+@layer utilities {
+  /* Hides scrollbar on horizontal rails without killing keyboard scroll. */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Edge fade for marquees and scroll rails. */
+  .fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  }
+
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+}
