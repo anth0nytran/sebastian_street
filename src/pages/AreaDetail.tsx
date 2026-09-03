@@ -29,7 +29,7 @@ export default function AreaDetail() {
     return (
         <>
             <SEO
-                title={`${area.name} Real Estate Agent — Buy, Sell & Invest`}
+                title={`${area.name} Homes for Sale — Neighborhoods & Schools`}
                 description={`${area.name}, CA real estate representation from Sebastian Street, REALTOR® (DRE #${AGENT.dre}). ${area.county} County · ${area.schools} · ZIP ${area.zips.join(", ")}. Free home valuation in 24 hours.`}
                 path={`/areas/${area.slug}`}
                 {...(area.image ? { image: area.image, imageAlt: area.imageAlt } : {})}

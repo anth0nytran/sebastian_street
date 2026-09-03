@@ -291,6 +291,11 @@ function TrackRecord() {
                             brokerage's company-wide volume would look more impressive here. It would also
                             not be his.
                         </p>
+                        <div className="mt-9">
+                            <QuietLink to="/about#track-record">
+                                See all {SALES.length} closed transactions
+                            </QuietLink>
+                        </div>
                     </div>
                 </Reveal>
 
@@ -318,9 +323,11 @@ function TrackRecord() {
                                         <span className="font-serif text-[1.0625rem] font-black tracking-tight text-black">
                                             {sale.price}
                                         </span>
-                                        <span className="bg-black px-2 py-0.5 font-sans text-[0.4375rem] font-bold uppercase tracking-[0.2em] text-white">
-                                            {sale.side} Side
-                                        </span>
+                                        {sale.side && (
+                                            <span className="bg-black px-2 py-0.5 font-sans text-[0.4375rem] font-bold uppercase tracking-[0.2em] text-white">
+                                                {sale.side === "Buyer & Seller" ? "Both Sides" : `${sale.side} Side`}
+                                            </span>
+                                        )}
                                     </div>
                                     <p className="truncate font-sans text-[0.625rem] font-bold uppercase tracking-wider text-neutral-400">
                                         <span className="text-neutral-600">{sale.address}</span>
@@ -333,7 +340,7 @@ function TrackRecord() {
                                         <MapPin className="h-3 w-3 text-neutral-400" /> {sale.city}
                                     </span>
                                     <span className="mt-0.5 font-sans text-[0.5625rem] uppercase tracking-wider text-neutral-400">
-                                        CA {sale.zip}
+                                        {sale.closed ?? `CA ${sale.zip}`}
                                     </span>
                                 </div>
                             </div>
@@ -362,14 +369,16 @@ function Profile() {
                     </Eyebrow>
 
                     <div className="mb-8 flex items-center justify-center gap-5 md:gap-6">
-                        <img
-                            src={AGENT.headshot}
-                            alt={`${AGENT.name}, REALTOR®`}
-                            loading="lazy"
-                            width={96}
-                            height={96}
-                            className="h-20 w-20 flex-shrink-0 border border-white/15 object-cover object-top md:h-24 md:w-24"
-                        />
+                        <div className="w-28 flex-shrink-0 border border-white/15 md:w-36">
+                            <img
+                                src={AGENT.portrait}
+                                alt={`${AGENT.name}, REALTOR®`}
+                                loading="lazy"
+                                width={1200}
+                                height={1600}
+                                className="aspect-[3/4] w-full object-cover object-top"
+                            />
+                        </div>
                         <div className="text-left">
                             <h2 className="mb-2 text-d3 uppercase text-white">{AGENT.name}</h2>
                             <span className="font-sans text-[0.5625rem] font-bold uppercase tracking-[0.2em] text-white/35">

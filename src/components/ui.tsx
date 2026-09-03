@@ -581,9 +581,11 @@ export function PhotoBand({
 export function ScrollRail({
     children,
     label,
+    tone = "light",
 }: {
     children: ReactNode;
     label: string;
+    tone?: "light" | "dark";
 }) {
     const ref = useRef<HTMLDivElement>(null);
 
@@ -612,7 +614,12 @@ export function ScrollRail({
                         type="button"
                         onClick={() => scroll(dir)}
                         aria-label={dir === -1 ? `Previous ${label}` : `Next ${label}`}
-                        className="flex h-11 w-11 items-center justify-center border border-black/15 text-black transition-colors hover:border-black hover:bg-black hover:text-white"
+                        className={cn(
+                            "flex h-11 w-11 items-center justify-center border transition-colors",
+                            tone === "light"
+                                ? "border-black/15 text-black hover:border-black hover:bg-black hover:text-white"
+                                : "border-white/20 text-white hover:border-white hover:bg-white hover:text-black"
+                        )}
                     >
                         <ArrowRight className={cn("h-4 w-4", dir === -1 && "rotate-180")} />
                     </button>

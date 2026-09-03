@@ -24,7 +24,10 @@ export const AGENT = {
     phoneHref: "tel:+16266322559",
     phoneE164: "+1-626-632-2559",
     email: "sebastian@diamondstreetrealty.com",
+    /** Square crop. Used for schema.org `image`, where square is correct. */
     headshot: "/images/sebastian-street.webp",
+    /** Full 3:4 studio portrait. This is what the pages actually render. */
+    portrait: "/images/sebastian-street-portrait.webp",
     hours: { opens: "08:00", closes: "20:00", label: "8:00 AM – 8:00 PM daily" },
 } as const;
 
@@ -206,7 +209,7 @@ export const CREDENTIALS: Credential[] = [
     },
     {
         label: "Zillow Reviews",
-        value: "5.0 stars across 11 reviews",
+        value: "5.0 stars across 13 reviews",
         detail: "Every review from a client he represented",
         href: LINKS.zillow,
     },
@@ -247,13 +250,13 @@ export const CREDENTIALS: Credential[] = [
  */
 export const STATS = {
     own: [
-        { value: "11", label: "Five-Star Reviews" },
+        { value: "13", label: "Five-Star Reviews" },
         { value: "5.0", label: "Average Rating" },
-        { value: "7", label: "Closings Represented" },
-        { value: "$245K–$865K", label: "Closed Price Range" },
+        { value: "$150K–$1.43M", label: "Closed Price Range" },
+        { value: "13", label: "Closings Represented" },
     ],
     /** Sebastian's own verified reviews -- this is what aggregateRating uses. */
-    reviewCount: 11,
+    reviewCount: 13,
     rating: "5.0",
 } as const;
 
@@ -655,19 +658,32 @@ export interface SaleRecord {
     beds: number;
     baths: number;
     sqft: number;
-    when: string;
-    side: "Buyer" | "Seller";
+    /**
+     * Month the sale closed, absolute. The original data stored relative
+     * strings ("Sold 9 days ago") which were true the week they were written
+     * and quietly false every week after. Omitted where the real date isn't
+     * known rather than guessed.
+     */
+    closed?: string;
+    /** Omitted where the representation side wasn't recorded. */
+    side?: "Buyer" | "Seller" | "Buyer & Seller";
 }
 
 /** Sebastian's personally-represented closed transactions. */
 export const SALES: SaleRecord[] = [
-    { address: "6226 Washington Ave", city: "Whittier", zip: "90601", price: "$865,000", beds: 2, baths: 2, sqft: 1713, when: "Sold 9 days ago", side: "Buyer" },
-    { address: "1777 Mitchell Ave #29", city: "Tustin", zip: "92780", price: "$685,000", beds: 5, baths: 3, sqft: 1472, when: "Sold 18 days ago", side: "Buyer" },
-    { address: "2823 E Schumacher Paseo", city: "Ontario", zip: "91762", price: "$628,000", beds: 3, baths: 3, sqft: 1593, when: "Sold 3 months ago", side: "Buyer" },
-    { address: "15318 Cajon St", city: "Hesperia", zip: "92345", price: "$500,000", beds: 4, baths: 3, sqft: 2246, when: "Sold 2 years ago", side: "Buyer" },
-    { address: "8872 Maple Ave Unit J", city: "Montclair", zip: "91763", price: "$485,000", beds: 1, baths: 2, sqft: 1126, when: "Sold 8 months ago", side: "Buyer" },
-    { address: "20701 Beach Blvd Space 82", city: "Huntington Beach", zip: "92648", price: "$275,000", beds: 3, baths: 2, sqft: 1566, when: "Sold 1 year ago", side: "Buyer" },
-    { address: "4400 Philadelphia St Space 216", city: "Chino", zip: "91710", price: "$245,000", beds: 2, baths: 2, sqft: 1248, when: "Sold 1 year ago", side: "Buyer" },
+    { address: "99 Fuchsia", city: "Lake Forest", zip: "92630", price: "$1,429,000", beds: 4, baths: 3, sqft: 1709, closed: "Mar 2026" },
+    { address: "12 Filare", city: "Irvine", zip: "92620", price: "$1,150,000", beds: 2, baths: 2, sqft: 1100, closed: "Mar 2026", side: "Seller" },
+    { address: "1709 La Mancha", city: "Pomona", zip: "91768", price: "$1,068,000", beds: 4, baths: 3, sqft: 2778, closed: "Apr 2026", side: "Buyer" },
+    { address: "651 E Granada Ct", city: "Ontario", zip: "91764", price: "$705,000", beds: 3, baths: 2, sqft: 1089, closed: "Jul 2026", side: "Buyer" },
+    { address: "194 Rockledge Ln", city: "Lake Arrowhead", zip: "92352", price: "$290,000", beds: 2, baths: 2, sqft: 1058, closed: "May 2026", side: "Buyer & Seller" },
+    { address: "2755 Arrow Hwy #38", city: "La Verne", zip: "91750", price: "$150,000", beds: 2, baths: 2, sqft: 1100, closed: "May 2026", side: "Seller" },
+    { address: "6226 Washington Ave", city: "Whittier", zip: "90601", price: "$865,000", beds: 2, baths: 2, sqft: 1713, side: "Buyer" },
+    { address: "1777 Mitchell Ave #29", city: "Tustin", zip: "92780", price: "$685,000", beds: 5, baths: 3, sqft: 1472, side: "Buyer" },
+    { address: "2823 E Schumacher Paseo", city: "Ontario", zip: "91762", price: "$628,000", beds: 3, baths: 3, sqft: 1593, side: "Buyer" },
+    { address: "15318 Cajon St", city: "Hesperia", zip: "92345", price: "$500,000", beds: 4, baths: 3, sqft: 2246, side: "Buyer" },
+    { address: "8872 Maple Ave Unit J", city: "Montclair", zip: "91763", price: "$485,000", beds: 1, baths: 2, sqft: 1126, side: "Buyer" },
+    { address: "20701 Beach Blvd Space 82", city: "Huntington Beach", zip: "92648", price: "$275,000", beds: 3, baths: 2, sqft: 1566, side: "Buyer" },
+    { address: "4400 Philadelphia St Space 216", city: "Chino", zip: "91710", price: "$245,000", beds: 2, baths: 2, sqft: 1248, side: "Buyer" },
 ];
 
 /* ------------------------------------------------------------------ ROUTES */

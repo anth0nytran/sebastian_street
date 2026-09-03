@@ -29,10 +29,47 @@ async function routePaths() {
     return routes.map((r) => r.path);
 }
 
-/** Writes "/" to dist/index.html and "/x/y" to dist/x/y/index.html. */
-function outputPathFor(route) {
-    if (route === "/") return path.join(distDir, "index.html");
-    return path.join(distDir, route.replace(/^\//, ""), "index.html");
+/**
+ * Every route is written twice, to dist/x/y.html and dist/x/y/index.html.
+ *
+ * This is not belt-and-braces for its own sake. The directory-index form alone
+ * depends on the host resolving /contact to contact/index.html, and static
+ * servers disagree: both `vite preview` and `serve` fall back to the SPA
+ * entry (dist/index.html) instead, which silently serves the homepage's title,
+ * description and schema on every route to any client that does not run JS.
+ * Writing the flat file too -- the form Vercel's `cleanUrls` serves -- makes
+ * the output correct on every static host rather than only on the ones that
+ * happen to prefer directory indexes.
+ */
+function outputPathsFor(route) {
+    if (route === "/") return [path.join(distDir, "index.html")];
+    const rel = route.replace(/^\//, "");
+    return [path.join(distDir, `${rel}.html`), path.join(distDir, rel, "index.html")];
+}
+
+/**
+ * Fails the build if two routes ship the same <title>.
+ *
+ * A duplicate title is the signature of a route that rendered the wrong page,
+ * and it is invisible in a browser because the client corrects the title on
+ * hydration a few hundred milliseconds later. The only observer that sees the
+ * wrong one is a crawler that does not execute JavaScript -- the exact audience
+ * this build step exists to serve.
+ */
+function assertOwnTitle(route, document, titles) {
+    const match = document.match(/<title[^>]*>([\s\S]*?)<\/title>/);
+    if (!match) {
+        throw new Error(`Route "${route}" rendered no <title>.`);
+    }
+    const title = match[1].trim();
+    const seen = titles.get(title);
+    if (seen) {
+        throw new Error(
+            `Routes "${seen}" and "${route}" both rendered the title ${JSON.stringify(title)}. ` +
+                "One of them rendered the wrong page."
+        );
+    }
+    titles.set(title, route);
 }
 
 /**
@@ -168,6 +205,7 @@ function inject(template, rendered, route) {
 }
 
 async function main() {
+    const titles = new Map();
     const template = await readFile(path.join(distDir, "index.html"), "utf8");
     const { render } = await import(pathToFileURL(path.join(ssrDir, "entry-server.js")).href);
     const routes = await routePaths();
@@ -185,9 +223,12 @@ async function main() {
             );
         }
 
-        const outPath = outputPathFor(route);
-        await mkdir(path.dirname(outPath), { recursive: true });
-        await writeFile(outPath, inject(template, rendered, route), "utf8");
+        const document = inject(template, rendered, route);
+        for (const outPath of outputPathsFor(route)) {
+            await mkdir(path.dirname(outPath), { recursive: true });
+            await writeFile(outPath, document, "utf8");
+        }
+        assertOwnTitle(route, document, titles);
 
         console.log(`[prerender] ${route.padEnd(30)} ${(rendered.length / 1024).toFixed(1)} KB`);
     }

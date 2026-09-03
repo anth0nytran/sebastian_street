@@ -9,8 +9,7 @@ import {
     ActionAnchor,
     StatRow,
     FaqSection,
-    PhotoBand,
-} from "@/components/ui";
+    PhotoBand, ScrollRail } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
 const ABOUT_FAQS = [
@@ -24,7 +23,7 @@ const ABOUT_FAQS = [
     },
     {
         q: "How long has Sebastian Street been selling real estate?",
-        a: "Sebastian actively represents buyers, sellers and investors across Southern California, with a practice centered on Chino Hills and the greater Inland Empire. He works as a solo agent under eHomes. Every production figure published on this site is his own and is verifiable — the closed transactions listed here, and the eleven five-star reviews on his Zillow profile. No brokerage-wide or team figure appears anywhere on this site.",
+        a: "Sebastian actively represents buyers, sellers and investors across Southern California, with a practice centered on Chino Hills and the greater Inland Empire. He works as a solo agent under eHomes. Every production figure published on this site is his own and is verifiable — the closed transactions listed here, and the thirteen five-star reviews on his Zillow profile. No brokerage-wide or team figure appears anywhere on this site.",
     },
     {
         q: "What makes Sebastian different from other Inland Empire agents?",
@@ -90,14 +89,16 @@ export default function About() {
             <div className="canvas relative z-10">
                     <div className="flex flex-col gap-9 md:flex-row md:items-end">
                         <Reveal y={16}>
-                            <img
-                                src={AGENT.headshot}
-                                alt={`${AGENT.name}, REALTOR®`}
-                                width={192}
-                                height={192}
-                                fetchPriority="high"
-                                className="h-32 w-32 flex-shrink-0 border border-white/15 object-cover object-top md:h-44 md:w-44"
-                            />
+                            <div className="w-44 flex-shrink-0 border border-white/15 md:w-64">
+                                <img
+                                    src={AGENT.portrait}
+                                    alt={`${AGENT.name}, REALTOR®`}
+                                    width={1200}
+                                    height={1600}
+                                    fetchPriority="high"
+                                    className="aspect-[3/4] w-full object-cover object-top"
+                                />
+                            </div>
                         </Reveal>
                         <Reveal delay={0.1} y={16}>
                             <Eyebrow tone="dark" className="mb-5">
@@ -219,7 +220,7 @@ export default function About() {
             </section>
 
             {/* -------------------------------------------------- PRODUCTION */}
-            <section className="on-dark border-t border-black/[0.08] bg-black">
+            <section id="track-record" className="on-dark border-t border-black/[0.08] bg-black">
                 <SectionHead
                     eyebrow="Production"
                     title="The Numbers, Labelled"
@@ -232,55 +233,110 @@ export default function About() {
                     }
                 />
 
-                <div className="mx-auto grid max-w-canvas grid-cols-1 lg:grid-cols-2">
-                    <Reveal className="border-b border-white/10 lg:border-b-0 lg:border-r">
-                        <div className="p-6 md:p-12 lg:p-16">
-                            <span className="mb-8 flex items-center gap-3">
-                                <span className="h-[2px] w-6 bg-accent" />
-                                <span className="font-sans text-eyebrow uppercase text-white/60">
-                                    {AGENT.name} · Verified Record
-                                </span>
+                {/* Stats full width. In the old two-column version the price
+                    range wrapped onto three lines inside a half-width column. */}
+                <Reveal className="border-b border-white/10">
+                    <div className="canvas py-section-sm">
+                        <span className="mb-8 flex items-center gap-3">
+                            <span className="h-[2px] w-6 bg-accent" />
+                            <span className="font-sans text-eyebrow uppercase text-white/60">
+                                {AGENT.name} · Verified Record
                             </span>
-                            <StatRow stats={STATS.own} tone="dark" />
-                            <p className="mt-8 max-w-md text-body-sm text-white/40 text-pretty">
-                                Reviews and ratings come from his Zillow profile, where each one is tied to a
-                                transaction he closed. The closings and price range come from the transaction
-                                list beside this one. Nothing is rounded up and nothing is borrowed.
-                            </p>
-                        </div>
-                    </Reveal>
+                        </span>
+                        <StatRow stats={STATS.own} tone="dark" />
 
-                    <Reveal delay={0.1}>
-                        <div className="p-6 md:p-12 lg:p-16">
-                            <span className="mb-8 flex items-center gap-3">
+                        {/* The claim on the left, the means of checking it on the
+                            right. A page that says "verifiable" and then makes the
+                            reader go find the records is only half the argument. */}
+                        <div className="mt-10 grid grid-cols-1 gap-9 lg:grid-cols-[1fr_auto] lg:gap-16">
+                            <p className="max-w-measure-lg text-body-sm text-white/40 text-pretty">
+                                Reviews and ratings come from his Zillow profile, where each one is tied to a
+                                transaction he closed. The closings and the price range come from the
+                                transactions below. Nothing is rounded up and nothing is borrowed.
+                            </p>
+                            <div className="lg:min-w-[15rem]">
+                                <span className="mb-5 block font-sans text-micro uppercase text-white/35">
+                                    Check it yourself
+                                </span>
+                                <ul className="space-y-3">
+                                    {[
+                                        { label: "Reviews on Zillow", href: LINKS.zillow },
+                                        {
+                                            label: `DRE #${AGENT.dre} lookup`,
+                                            href: "https://www2.dre.ca.gov/PublicASP/pplinfo.asp",
+                                        },
+                                    ].map(({ label, href }) => (
+                                        <li key={label}>
+                                            <a
+                                                href={href}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-2 font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-white/70 transition-colors hover:text-accent"
+                                            >
+                                                {label}
+                                                <ExternalLink className="h-3 w-3 flex-shrink-0" />
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </Reveal>
+
+                {/* A rail rather than a list: thirteen closings as rows made the
+                    section taller than the screen twice over, and the count only
+                    goes up from here. */}
+                <Reveal delay={0.1}>
+                    <div className="canvas py-section-sm">
+                        <div className="mb-9 flex flex-wrap items-end justify-between gap-4">
+                            <span className="flex items-center gap-3">
                                 <span className="h-[2px] w-6 bg-white" />
                                 <span className="font-sans text-eyebrow uppercase text-white/60">
                                     {AGENT.name} · Personally Represented
                                 </span>
                             </span>
-                            <ul className="space-y-4">
-                                {SALES.map((sale) => (
-                                    <li
-                                        key={sale.address}
-                                        className="flex items-baseline justify-between gap-4 border-b border-white/[0.07] pb-4"
-                                    >
-                                        <span className="min-w-0">
-                                            <span className="block font-serif text-[0.9375rem] font-black tracking-tight text-white">
-                                                {sale.price}
-                                            </span>
-                                            <span className="mt-1 block truncate font-sans text-[0.625rem] uppercase tracking-wider text-white/35">
-                                                {sale.city}, CA {sale.zip} · {sale.beds}bd {sale.baths}ba
-                                            </span>
-                                        </span>
-                                        <span className="flex-shrink-0 font-sans text-[0.5625rem] font-bold uppercase tracking-[0.15em] text-accent">
-                                            {sale.side} Side
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
+                            <span className="font-sans text-micro uppercase text-white/30">
+                                {SALES.length} closings · scroll for more
+                            </span>
                         </div>
-                    </Reveal>
-                </div>
+
+                        <ScrollRail label="closed transactions" tone="dark">
+                            {SALES.map((sale) => (
+                                <article
+                                    key={sale.address}
+                                    data-rail-item
+                                    className="flex w-[17rem] flex-shrink-0 snap-start flex-col justify-between border border-white/10 bg-white/[0.03] p-6 transition-colors hover:border-white/25 md:w-[19rem]"
+                                >
+                                    <div className="mb-8 flex items-center justify-between gap-3">
+                                        <span className="font-sans text-[0.5625rem] font-bold uppercase tracking-[0.2em] text-white/35">
+                                            {sale.closed ?? `CA ${sale.zip}`}
+                                        </span>
+                                        {sale.side && (
+                                            <span className="flex-shrink-0 font-sans text-[0.5625rem] font-bold uppercase tracking-[0.15em] text-accent">
+                                                {sale.side === "Buyer & Seller" ? "Both Sides" : `${sale.side} Side`}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <span className="block font-serif text-[1.5rem] font-black leading-none tracking-tight text-white">
+                                            {sale.price}
+                                        </span>
+                                        <span className="mt-4 block truncate font-sans text-[0.6875rem] font-bold uppercase tracking-[0.12em] text-white/70">
+                                            {sale.address}
+                                        </span>
+                                        <span className="mt-1.5 block font-sans text-[0.625rem] uppercase tracking-wider text-white/35">
+                                            {sale.city}, CA {sale.zip}
+                                        </span>
+                                        <span className="mt-4 block border-t border-white/10 pt-3 font-sans text-[0.625rem] uppercase tracking-wider text-white/45">
+                                            {sale.beds}bd · {sale.baths}ba · {sale.sqft.toLocaleString()}sf
+                                        </span>
+                                    </div>
+                                </article>
+                            ))}
+                        </ScrollRail>
+                    </div>
+                </Reveal>
             </section>
 
             {/* -------------------------------------------------- FOOTPRINT */}

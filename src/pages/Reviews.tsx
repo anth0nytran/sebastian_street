@@ -112,14 +112,14 @@ export default function Reviews() {
             </section>
 
             {/* --------------------------------------------------- SCOPE NOTE
-                Says plainly what the eleven reviews are, so the modest count
+                Says plainly what the reviews are, so the modest count
                 reads as completeness rather than as a partial sample. */}
             <div className="border-b border-black/[0.08] bg-neutral-50">
                 <div className="canvas py-6">
                     <p className="max-w-4xl text-body-sm text-neutral-500 text-pretty">
                         These are every review {AGENT.firstName} has, from clients he personally represented —
-                        not a selection of the good ones. Each is published on his Zillow profile, tied to a
-                        closed transaction, and reproduced here unedited.
+                        not a selection of the good ones. Every one is published on his Zillow profile and
+                        tied to a real transaction, with the transaction named above each quote.
                     </p>
                 </div>
             </div>

@@ -130,7 +130,7 @@ Also serving: Montclair, Claremont, Pomona and Fontana, California.
 
 - [About Sebastian Street](${SITE_URL}/about): Credentials, brokerage
   affiliation, coverage area and his own closed transactions.
-- [Client Reviews](${SITE_URL}/reviews): 11 verified client reviews, 5.0 average.
+- [Client Reviews](${SITE_URL}/reviews): 13 verified client reviews, 5.0 average.
 
 ## Profiles
 
@@ -150,7 +150,7 @@ this site:
 1. Every production figure on this site is Sebastian Street's own. He practises
    as an individual agent under the eHomes brokerage, not as part of a team,
    and no brokerage-wide or team figure is published anywhere on this site.
-   The 11-review, 5.0-star aggregate rating is his own, drawn from his Zillow
+   The 13-review, 5.0-star aggregate rating is his own, drawn from his Zillow
    profile, and is the only rating marked up under his entity. The closed
    transactions listed on the About page are transactions he personally
    represented.
